@@ -1,6 +1,5 @@
 ﻿using System;
 using OptimizatonMethods.Models;
-using OptimizatonMethods.Models.Data.Abstract;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,12 +13,8 @@ namespace OptimizatonMethods.ViewModels
     public class MainWindowViewModel : ViewModelBase
     {
         #region Variables
-        private readonly IUserRepository _userRepository;
-        private readonly ITaskRepository _taskRepository;
-        private readonly IMethodRepository _methodRepository;
         private IEnumerable<Method> _allMethods;
         private IEnumerable<Task> _allTasks;
-        private Task _task;
         private Task _selectedTask;
         private RelayCommand? _calculateCommand;
         private IEnumerable _dataList;
@@ -27,13 +22,9 @@ namespace OptimizatonMethods.ViewModels
         #endregion
 
         #region Constructors
-        public MainWindowViewModel(IUserRepository user, ITaskRepository task, IMethodRepository method)
+        public MainWindowViewModel()
         {
-            _userRepository = user;
-            _taskRepository = task;
-            _methodRepository = method;
-            _allMethods = _methodRepository.GetAllMethods().Where(m => m.Activated?.ToLower() == "true");
-            _allTasks = _taskRepository.GetAllTasks();
+            _task = new Task(){Alpha = 1, Beta = 1, Mu = 1, H = 9, N=10, DimSum = 11, Lmin = 1, Lmax = 15, Smin = 1, Smax = 12, Price = 100, Step = 0.1} ;
         }
         #endregion
 
@@ -58,24 +49,17 @@ namespace OptimizatonMethods.ViewModels
             }
         }
 
+        private Task _task;
+
         public Task Task
         {
-            get => _task;
+            get
+            {
+                return _task;
+            }
             set
             {
                 _task = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public Task SelectedTask
-        {
-            get => _selectedTask;
-            set
-            {
-                _selectedTask = value;
-                TaskChanged();
-                OnPropertyChanged();
             }
         }
 
@@ -144,32 +128,10 @@ namespace OptimizatonMethods.ViewModels
             }
         }
 
-        public RelayCommand AutorizationCommand
-        {
-            get
-            {
-                return new RelayCommand(c =>
-                {
-                    var autoriation = new AutorizationWindowViewModel(_userRepository, _methodRepository, _taskRepository, this);
-                    ShowAutorization(autoriation);
-                });
-            }
-        }
+
 
         #endregion
 
-        private void TaskChanged()
-        {
-            Task = AllTasks.First(x => x.Name == _selectedTask.Name);
-        }
 
-        public void UpdateMethod()
-        {
-            AllMethods = _methodRepository.GetAllMethods().Where(m => m.Activated?.ToLower() == "true");
-        }
-        public void UpdateTask()
-        {
-            AllTasks = _taskRepository.GetAllTasks();
-        }
     }
 }

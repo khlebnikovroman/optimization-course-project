@@ -19,41 +19,39 @@ namespace OptimizatonMethods.Models
         private double alpha;
         private double beta;
         private double mu;
-        private double delta;
-        private double G;
-        private double A;
+        private double H;
         private double N;
-        private double t1min;
-        private double t1max;
-        private double t2min;
-        private double t2max;
-        private double tempDiff;
+        private double price;
+        private double lmin;
+        private double lmax;
+        private double smin;
+        private double smax;
+        private double dimSum;
 
         public MathModel(Task task)
         {
             _task = task;
+            price = (double)_task.Price;
             alpha = (double)_task.Alpha;
             beta = (double)_task.Beta;
             mu = (double)_task.Mu;
-            delta = (double)_task.Delta;
-            G = (double)_task.G;
-            A = (double)_task.A;
             N = (double)_task.N;
-            t1min = (double)_task.T1min;
-            t1max = (double)_task.T1max;
-            t2min = (double)_task.T2min;
-            t2max = (double)_task.T2max;
-            tempDiff = (double)_task.DifferenceTemp;
+            lmin = (double)_task.Lmin;
+            lmax = (double)_task.Lmax;
+            smin = (double)_task.Smin;
+            smax = (double)_task.Smax;
+            dimSum = (double)_task.DimSum;
+            H = (double)_task.H;
         }
         public int CalculationCount { get; private set; } = 0;
-        public double Function(double t1, double t2)
+        public double Function(double l, double s)
         {
-            return (double)(_task.Price * alpha * G * (Math.Pow(t2 - beta * A, N) + mu * Math.Pow(Math.Exp(t1 + t2), N) + delta * (t2 - t1)));
+            return (double)(price * alpha * Math.Pow(l - s, 2) + beta * (1 / H) * Math.Pow(s + l - mu*N, 2));
         }
 
-        private bool Conditions(double t1, double t2)
+        private bool Conditions(double l, double s)
         {
-            return t1 >= t1min && t1 <= t1max && t2 >= t2min && t2 <= t2max && (t2 - t1) >= tempDiff;
+            return (l>=lmin)&&(l<=lmax)&&(s>=smin)&&(s<=smax)&&(l+s>=dimSum);
         }
 
         public void Calculate(out List<Point3D> points3D)
@@ -66,11 +64,11 @@ namespace OptimizatonMethods.Models
             Point newMin;
 
             newMin = SearchMinOnGrid(out p3D, out values);
-            t1min = newMin.X - _step;
-            t2min = newMin.Y - _step;
+            lmin = newMin.X - _step;
+            smin = newMin.Y - _step;
 
-            t1max = newMin.X + _step;
-            t2max = newMin.Y + _step;
+            lmax = newMin.X + _step;
+            smax = newMin.Y + _step;
 
             _step /= _k;
             points3D.AddRange(p3D);
@@ -79,11 +77,11 @@ namespace OptimizatonMethods.Models
             {
                 newMin = SearchMinOnGrid(out p3D, out values);
 
-                t1min = newMin.X - _step;
-                t2min = newMin.Y - _step;
+                lmin = newMin.X - _step;
+                smin = newMin.Y - _step;
 
-                t1max = newMin.X + _step;
-                t2max = newMin.Y + _step;
+                lmax = newMin.X + _step;
+                smax = newMin.Y + _step;
 
                 _step /= _k;
                 funcMin = values.Min();
@@ -95,8 +93,8 @@ namespace OptimizatonMethods.Models
         {
             points3D = new List<Point3D>();
 
-            for (var t1 = t1min; t1 <= t1max; t1 += _step)
-                for (var t2 = t2min; t2 <= t2max; t2 += _step)
+            for (var t1 = lmin; t1 <= lmax; t1 += _step)
+                for (var t2 = smin; t2 <= smax; t2 += _step)
                 {
                     if (!Conditions(t1, t2))
                         continue;
