@@ -1,8 +1,8 @@
 ﻿<Window x:Class="OptimizatonMethods.AddTaskWindow"
+        xmlns:hc="https://handyorg.github.io/handycontrol"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:OptimizatonMethods"
         mc:Ignorable="d"
@@ -54,46 +54,46 @@
         <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding NewTask.Name}"></TextBox>
 
         <Label Grid.Row ="4" Grid.Column="1">Альфа</Label>
-        <xctk:DoubleUpDown Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Value="{Binding NewTask.Alpha}"></xctk:DoubleUpDown>
+        <hc:NumericUpDown Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Value="{Binding NewTask.Alpha}"></hc:NumericUpDown>
 
         <Label Grid.Row ="7" Grid.Column="1">Бета</Label>
-        <xctk:DoubleUpDown Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="2" Value="{Binding NewTask.Beta}"></xctk:DoubleUpDown>
+        <hc:NumericUpDown Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="2" Value="{Binding NewTask.Beta}"></hc:NumericUpDown>
 
         <Label Grid.Row ="10" Grid.Column="1">Дельта</Label>
-        <xctk:DoubleUpDown Grid.Row="11" Grid.Column="1" Grid.ColumnSpan="2" Value="{Binding NewTask.Delta}"></xctk:DoubleUpDown>
+        <hc:NumericUpDown Grid.Row="11" Grid.Column="1" Grid.ColumnSpan="2" Value="{Binding NewTask.Delta}"></hc:NumericUpDown>
 
         <Label Grid.Row ="13" Grid.Column="1">Мю</Label>
-        <xctk:DoubleUpDown Grid.Row="14" Grid.Column="1" Grid.ColumnSpan="2" Value="{Binding NewTask.Mu}"></xctk:DoubleUpDown>
+        <hc:NumericUpDown Grid.Row="14" Grid.Column="1" Grid.ColumnSpan="2" Value="{Binding NewTask.Mu}"></hc:NumericUpDown>
 
         <Label Grid.Row ="16" Grid.Column="1" Grid.ColumnSpan="3">Расход реакционной смеси, кг/ч</Label>
-        <xctk:DoubleUpDown Grid.Row="17" Grid.Column="1" Grid.ColumnSpan="2" Value="{Binding NewTask.G}"></xctk:DoubleUpDown>
+        <hc:NumericUpDown Grid.Row="17" Grid.Column="1" Grid.ColumnSpan="2" Value="{Binding NewTask.G}"></hc:NumericUpDown>
 
         <Label Grid.Row ="19" Grid.Column="1" Grid.ColumnSpan="3">Давление в реакторе, КПа</Label>
-        <xctk:DoubleUpDown Grid.Row="20" Grid.Column="1" Grid.ColumnSpan="2" Value="{Binding NewTask.A}"></xctk:DoubleUpDown>
+        <hc:NumericUpDown Grid.Row="20" Grid.Column="1" Grid.ColumnSpan="2" Value="{Binding NewTask.A}"></hc:NumericUpDown>
 
         <Label Grid.Row ="22" Grid.Column="1" Grid.ColumnSpan="3">Кол-во теплообменных устройств, шт</Label>
-        <xctk:DoubleUpDown Grid.Row="23" Grid.Column="1" Grid.ColumnSpan="2" Value="{Binding NewTask.N}"></xctk:DoubleUpDown>
+        <hc:NumericUpDown Grid.Row="23" Grid.Column="1" Grid.ColumnSpan="2" Value="{Binding NewTask.N}"></hc:NumericUpDown>
 
         <Label Grid.Row ="4" Grid.Column="5" Grid.ColumnSpan="3">Минимальная температура Т1</Label>
-        <xctk:DoubleUpDown Grid.Row="5" Grid.Column="5" Grid.ColumnSpan="2" Value="{Binding NewTask.T1min}"></xctk:DoubleUpDown>
+        <hc:NumericUpDown Grid.Row="5" Grid.Column="5" Grid.ColumnSpan="2" Value="{Binding NewTask.T1min}"></hc:NumericUpDown>
 
         <Label Grid.Row ="7" Grid.Column="5" Grid.ColumnSpan="3">Максимальная температура Т1</Label>
-        <xctk:DoubleUpDown Grid.Row="8" Grid.Column="5" Grid.ColumnSpan="2" Value="{Binding NewTask.T1max}"></xctk:DoubleUpDown>
+        <hc:NumericUpDown Grid.Row="8" Grid.Column="5" Grid.ColumnSpan="2" Value="{Binding NewTask.T1max}"></hc:NumericUpDown>
 
         <Label Grid.Row ="10" Grid.Column="5" Grid.ColumnSpan="3">Минимальная температура Т2</Label>
-        <xctk:DoubleUpDown Grid.Row="11" Grid.Column="5" Grid.ColumnSpan="2" Value="{Binding NewTask.T2min}"></xctk:DoubleUpDown>
+        <hc:NumericUpDown Grid.Row="11" Grid.Column="5" Grid.ColumnSpan="2" Value="{Binding NewTask.T2min}"></hc:NumericUpDown>
 
         <Label Grid.Row ="13" Grid.Column="5" Grid.ColumnSpan="3">Максимальная температура Т2</Label>
-        <xctk:DoubleUpDown Grid.Row="14" Grid.Column="5" Grid.ColumnSpan="2" Value="{Binding NewTask.T2max}"></xctk:DoubleUpDown>
+        <hc:NumericUpDown Grid.Row="14" Grid.Column="5" Grid.ColumnSpan="2" Value="{Binding NewTask.T2max}"></hc:NumericUpDown>
 
         <Label Grid.Row ="16" Grid.Column="5" Grid.ColumnSpan="3">Разница температур Т2-Т1</Label>
-        <xctk:DoubleUpDown Grid.Row="17" Grid.Column="5" Grid.ColumnSpan="2" Value="{Binding NewTask.DifferenceTemp}"></xctk:DoubleUpDown>
+        <hc:NumericUpDown Grid.Row="17" Grid.Column="5" Grid.ColumnSpan="2" Value="{Binding NewTask.DifferenceTemp}"></hc:NumericUpDown>
 
         <Label Grid.Row ="19" Grid.Column="5" Grid.ColumnSpan="3">Себестоимость материала, у.е.</Label>
-        <xctk:DoubleUpDown Grid.Row="20" Grid.Column="5" Grid.ColumnSpan="2" Value="{Binding NewTask.Price}"></xctk:DoubleUpDown>
+        <hc:NumericUpDown Grid.Row="20" Grid.Column="5" Grid.ColumnSpan="2" Value="{Binding NewTask.Price}"></hc:NumericUpDown>
 
         <Label Grid.Row ="22" Grid.Column="5" Grid.ColumnSpan="3">Точность решения, у.е.</Label>
-        <xctk:DoubleUpDown Grid.Row="23" Grid.Column="5" Grid.ColumnSpan="2" Value="{Binding NewTask.Step}"></xctk:DoubleUpDown>
+        <hc:NumericUpDown Grid.Row="23" Grid.Column="5" Grid.ColumnSpan="2" Value="{Binding NewTask.Step}"></hc:NumericUpDown>
 
         <Button Grid.Row="26" Grid.Column="3" Grid.ColumnSpan="2" Command="{Binding AddOrUpdateTaskCommand}">Готово</Button>
     </Grid>

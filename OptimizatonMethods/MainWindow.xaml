@@ -1,135 +1,184 @@
-﻿<Window x:Class="OptimizatonMethods.MainWindow"
-        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:OptimizatonMethods"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="1400" MinHeight="600" MinWidth="1400" FontSize="16" SizeChanged="MainWindow_OnSizeChanged">
+﻿<hc:Window x:Class="OptimizatonMethods.MainWindow"
+           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+           xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+           xmlns:hc="https://handyorg.github.io/handycontrol"
+           xmlns:controls="clr-namespace:WpfMath.Controls;assembly=WpfMath"
+           xmlns:viewModels="clr-namespace:OptimizatonMethods.ViewModels"
+           mc:Ignorable="d"
+           ShowTitle="False"
+           Title="MainWindow" Height="600" Width="1400" MinHeight="600" MinWidth="1400" FontSize="16"
+           d:DataContext="{d:DesignInstance viewModels:MainWindowViewModel}"
+           SizeChanged="MainWindow_OnSizeChanged">
+    <hc:Window.NonClientAreaContent>
+        <StackPanel Orientation="Horizontal">
+            <Menu>
+                <MenuItem Header="Файл">
+                    <MenuItem Header="Сменить пользователя" Command="{Binding AutorizationCommand}" />
+                    <MenuItem Header="2D график" Command="{Binding TwoDChartCommand}" />
+                    <MenuItem Header="3D график" Command="{Binding ThreeDChartCommand}" />
+                </MenuItem>
+                <MenuItem Header="О программе" />
+            </Menu>
+            <TextBlock Text="{Binding Title,RelativeSource={RelativeSource FindAncestor,AncestorType=Window}}"
+                       Margin="5" FontSize="14" VerticalAlignment="Stretch" />
+        </StackPanel>
+
+    </hc:Window.NonClientAreaContent>
+
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="20"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.25*"/>
-            <ColumnDefinition Width="0.4*"/>
+            <ColumnDefinition Width="0.25*" />
+            <ColumnDefinition Width="0.4*" />
         </Grid.ColumnDefinitions>
 
-        <Menu Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
-            <MenuItem Header="Файл">
-                <MenuItem Header="Сменить пользователя" Command="{Binding AutorizationCommand}"/>
-                <MenuItem Header="2D график" Command="{Binding TwoDChartCommand}"/>
-                <MenuItem Header="3D график" Command="{Binding ThreeDChartCommand}"/>
-            </MenuItem>
-            <MenuItem Header="О программе"/>
-        </Menu>
 
-        <Grid Grid.Row="1" Grid.Column="0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="0.65*"/>
-                <RowDefinition Height="0.33*"/>
-                <RowDefinition Height="0.2*"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="0">
+            <ComboBox hc:InfoElement.Title="Выбор задания:" Style="{StaticResource ComboBoxExtend}"
+                      hc:InfoElement.TitlePlacement="Left"
+                      Margin="10 5" SelectedItem="{Binding SelectedTask, Mode=TwoWay}"
+                      ItemsSource="{Binding AllTasks}" DisplayMemberPath="Name" />
+            <controls:FormulaControl Formula="P = \alpha  * (L - S)^2 + \beta  * 1 / H * (S+ L -  \gamma  *N)^2" ></controls:FormulaControl>
+            <Image Source="pack://application:,,,/Image/formula.png"
+                   Height="50" />
 
-            <Label Grid.Row="0" Grid.Column="0">Выбор задания:</Label>
-            <ComboBox Grid.Row="0" Grid.Column="1" Margin="10 5" SelectedItem="{Binding SelectedTask, Mode=TwoWay}" ItemsSource="{Binding AllTasks}" DisplayMemberPath="Name" ></ComboBox>
-
-            <Image Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Source="pack://application:,,,/Image/formula.png" Height="50"></Image>
-
-            <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
+            <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
                 </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition Width="0.6*"/>
-                </Grid.ColumnDefinitions>
 
-                <Label Grid.Row="0" Grid.Column="0">Нормирующий множитель α</Label>
-                <xctk:DoubleUpDown Grid.Row="0" Grid.Column="1" Margin="10 1" Value="{Binding Task.Alpha}"></xctk:DoubleUpDown>
+                <!--<Label Grid.Row="0" Grid.Column="0">Нормирующий множитель α</Label>-->
+                <hc:NumericUpDown hc:InfoElement.Title="Нормирующий множитель α" hc:InfoElement.TitlePlacement="Left" hc:InfoElement.TitleWidth="3*"
+                                  Style="{StaticResource NumericUpDownExtend}" Grid.Row="0" Margin="10 1"
+                                  Value="{Binding Task.Alpha}" />
+                    <hc:NumericUpDown hc:InfoElement.Title="Нормирующий множитель β" hc:InfoElement.TitlePlacement="Left" hc:InfoElement.TitleWidth="3*"
+                                  Style="{StaticResource NumericUpDownExtend}" Grid.Row="1" Margin="10 1"
+                                  Value="{Binding Task.Beta}" />
+                <hc:NumericUpDown hc:InfoElement.Title="Нормирующий множитель μ" hc:InfoElement.TitlePlacement="Left" hc:InfoElement.TitleWidth="3*"
+                                  Style="{StaticResource NumericUpDownExtend}" Grid.Row="2" Margin="10 1"
+                                  Value="{Binding Task.Mu}" />
+                <hc:NumericUpDown hc:InfoElement.Title="Нормирующий множитель Δ" hc:InfoElement.TitlePlacement="Left" hc:InfoElement.TitleWidth="3*"
+                                  Style="{StaticResource NumericUpDownExtend}" Grid.Row="3" Margin="10 1"
+                                  Value="{Binding Task.Delta}" />
+                <hc:NumericUpDown hc:InfoElement.Title="Расход реакционной массы, кг/ч" hc:InfoElement.TitleWidth="3*"
+                                  hc:InfoElement.TitlePlacement="Left" Style="{StaticResource NumericUpDownExtend}"
+                                  Grid.Row="4" Margin="10 1" Value="{Binding Task.G}" />
+                <hc:NumericUpDown hc:InfoElement.Title="Давление в реакторе, КПа" hc:InfoElement.TitlePlacement="Left" hc:InfoElement.TitleWidth="3*"
+                                  Style="{StaticResource NumericUpDownExtend}" Grid.Row="5" Margin="10 1"
+                                  Value="{Binding Task.A}" />
+                <hc:NumericUpDown hc:InfoElement.Title="Количество теплообменных устройств , шт" hc:InfoElement.TitleWidth="3*"
+                                  hc:InfoElement.TitlePlacement="Left" Style="{StaticResource NumericUpDownExtend}"
+                                  Grid.Row="6" Margin="10 1" Value="{Binding Task.N}" />
 
-                <Label Grid.Row="1" Grid.Column="0">Нормирующий множитель β</Label>
-                <xctk:DoubleUpDown Grid.Row="1" Grid.Column="1" Margin="10 1" Value="{Binding Task.Beta}"></xctk:DoubleUpDown>
+                <!--<Label Grid.Row="1" Grid.Column="0">Нормирующий множитель β</Label>
+                <hc:NumericUpDown Grid.Row="1" Grid.Column="1" Margin="10 1" Value="{Binding Task.Beta}" />
 
                 <Label Grid.Row="2" Grid.Column="0">Нормирующий множитель μ</Label>
-                <xctk:DoubleUpDown Grid.Row="2" Grid.Column="1" Margin="10 1" Value="{Binding Task.Mu}"></xctk:DoubleUpDown>
+                <hc:NumericUpDown Grid.Row="2" Grid.Column="1" Margin="10 1" Value="{Binding Task.Mu}" />
 
                 <Label Grid.Row="3" Grid.Column="0">Нормирующий множитель Δ</Label>
-                <xctk:DoubleUpDown Grid.Row="3" Grid.Column="1" Margin="10 1" Value="{Binding Task.Delta}"></xctk:DoubleUpDown>
+                <hc:NumericUpDown Grid.Row="3" Grid.Column="1" Margin="10 1" Value="{Binding Task.Delta}" />
 
                 <Label Grid.Row="4" Grid.Column="0">Расход реакционной массы, кг/ч</Label>
-                <xctk:DoubleUpDown Grid.Row="4" Grid.Column="1" Margin="10 1" Value="{Binding Task.G}"></xctk:DoubleUpDown>
+                <hc:NumericUpDown Grid.Row="4" Grid.Column="1" Margin="10 1" Value="{Binding Task.G}" />
 
                 <Label Grid.Row="5" Grid.Column="0">Давление в реакторе, КПа</Label>
-                <xctk:DoubleUpDown Grid.Row="5" Grid.Column="1" Margin="10 1" Value="{Binding Task.A}"></xctk:DoubleUpDown>
+                <hc:NumericUpDown Grid.Row="5" Grid.Column="1" Margin="10 1" Value="{Binding Task.A}" />
 
                 <Label Grid.Row="6" Grid.Column="0">Количество теплообменных устройств , шт</Label>
-                <xctk:DoubleUpDown Grid.Row="6" Grid.Column="1" Margin="10 1" Value="{Binding Task.N}"></xctk:DoubleUpDown>
+                <hc:NumericUpDown Grid.Row="6" Grid.Column="1" Margin="10 1" Value="{Binding Task.N}" />-->
 
             </Grid>
 
-            <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2">
+            <GroupBox Header="Ограничения" Style="{StaticResource GroupBoxTab}">
+                <StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="5*"/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <hc:NumericUpDown Grid.Column="0"
+                                          Value="{Binding Task.T1min}" />
+                        <Label Grid.Column="1" HorizontalAlignment="Stretch"  >≤ Температура в змеевике T1, ℃ ≤</Label>
+                        <hc:NumericUpDown   Grid.Column="2"
+                                            Value="{Binding Task.T1max}" />
+
+                        <hc:NumericUpDown Grid.Row="1"  Grid.Column="0" 
+                                          Value="{Binding Task.T2min}" />
+                        <Label Grid.Row="1"  Grid.Column="1" HorizontalAlignment="Stretch" >≤ Температура в диффузоре T2, ℃ ≤</Label>
+                        <hc:NumericUpDown Grid.Row="1"  Grid.Column="2" 
+                                          Value="{Binding Task.T2max}" />
+
+                    </Grid>
+                    <hc:ElementGroup Orientation="Horizontal" Margin="5">
+                        
+                    </hc:ElementGroup>
+
+                    <hc:NumericUpDown hc:InfoElement.Title="Разница температур T2 - T1, ℃ ≥"
+                                      hc:InfoElement.TitlePlacement="Left" Style="{StaticResource NumericUpDownExtend}"
+                                      HorizontalAlignment="Left" 
+                                      Value="{Binding Task.DifferenceTemp}" />
+
+
+                </StackPanel>
+
+            </GroupBox>
+
+            <!--<Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="0.5*"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="0.5*"/>
+                    <ColumnDefinition Width="0.5*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="0.5*" />
                 </Grid.ColumnDefinitions>
 
-                <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center">Ограничения</Label>
+                
 
-                <xctk:DoubleUpDown Grid.Row="1" Grid.Column="0" Margin="10 1 0 1" HorizontalAlignment="Right" Width="75" Value="{Binding Task.T1min}"></xctk:DoubleUpDown>
-                <Label Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center">≤ Температура в змеевике T1, ℃  ≤</Label>
-                <xctk:DoubleUpDown Grid.Row="1" Grid.Column="2" Margin="0 1 10 1" HorizontalAlignment="Left" Width="75" Value="{Binding Task.T1max}"></xctk:DoubleUpDown>
-
-                <xctk:DoubleUpDown Grid.Row="2" Grid.Column="0" Margin="10 1 0 1" HorizontalAlignment="Right" Width="75" Value="{Binding Task.T2min}"></xctk:DoubleUpDown>
-                <Label Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center">≤ Температура в диффузоре T2, ℃ ≤</Label>
-                <xctk:DoubleUpDown Grid.Row="2" Grid.Column="2" Margin="0 1 10 1" HorizontalAlignment="Left" Width="75" Value="{Binding Task.T2max}"></xctk:DoubleUpDown>
-
-                <Label Grid.Row="3" Grid.Column="1" HorizontalAlignment="Right">Разница температур T2 - T1, ℃ ≥</Label>
-                <xctk:DoubleUpDown Grid.Row="3" Grid.Column="2" Margin="0 1 10 1" HorizontalAlignment="Left" Width="75"  Value="{Binding Task.DifferenceTemp}"></xctk:DoubleUpDown>
-
-            </Grid>
+            </Grid>-->
 
             <Grid Row="4" Column="0" ColumnSpan="2">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="0.2*"/>
-                    <RowDefinition Height="0.33*"/>
-                    <RowDefinition Height="0.2*"/>
+                    <RowDefinition Height="0.2*" />
+                    <RowDefinition Height="0.33*" />
+                    <RowDefinition Height="0.2*" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="0.2*"/>
-                    <ColumnDefinition Width="0.33*"/>
-                    <ColumnDefinition Width="0.33*"/>
+                    <ColumnDefinition Width="0.2*" />
+                    <ColumnDefinition Width="0.33*" />
+                    <ColumnDefinition Width="0.33*" />
                 </Grid.ColumnDefinitions>
 
                 <Label Grid.Row="1" Grid.Column="0">Выбор метода:</Label>
-                <ComboBox Grid.Row="1" Grid.Column="1"   Margin="10 5" SelectedItem="{Binding SelectedMethod, Mode=TwoWay}" ItemsSource="{Binding AllMethods}" DisplayMemberPath="Name" ></ComboBox>
+                <ComboBox Grid.Row="1" Grid.Column="1" Margin="10 5"
+                          SelectedItem="{Binding SelectedMethod, Mode=TwoWay}" ItemsSource="{Binding AllMethods}"
+                          DisplayMemberPath="Name" />
 
                 <Button Grid.Row="1" Grid.Column="2" Margin="5" Command="{Binding CalculateCommand}">Рассчитать</Button>
             </Grid>
-        </Grid>
+        </StackPanel>
 
-        <DataGrid Grid.Row="1" Grid.Column="1" ItemsSource="{Binding DataList}" AutoGenerateColumns="True" AutoGeneratingColumn="OnAutoGeneratingColumn" ColumnWidth="*"></DataGrid>
+        <DataGrid Grid.Row="1" Grid.Column="1" ItemsSource="{Binding DataList}" AutoGenerateColumns="True"
+                  AutoGeneratingColumn="OnAutoGeneratingColumn" ColumnWidth="*" />
 
     </Grid>
-</Window>
+</hc:Window>
