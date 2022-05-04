@@ -35,32 +35,41 @@
 
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition Height="50"/>
+                <RowDefinition />
+                <RowDefinition Height="50" />
             </Grid.RowDefinitions>
             <StackPanel Grid.Column="0">
 
-                <controls:FormulaControl Scale="25" Margin="10"  Formula="P = \alpha  * (L - S)^2 + \beta  * 1 / H * (S+ L -  \gamma  *N)^2" ></controls:FormulaControl>
+                <controls:FormulaControl Scale="25" Margin="10"
+                                         Formula="P = \alpha  * (L - S)^2 + \beta  * 1 / H * (S+ L -  \gamma  *N)^2" />
 
                 <StackPanel>
-                    <hc:NumericUpDown hc:InfoElement.Title="Нормирующий множитель α" hc:InfoElement.TitlePlacement="Left" hc:InfoElement.TitleWidth="3*"
-                                      Style="{StaticResource NumericUpDownExtend}"  Margin="10 1"
+                    <hc:NumericUpDown hc:InfoElement.Title="Нормирующий множитель α"
+                                      hc:InfoElement.TitlePlacement="Left" hc:InfoElement.TitleWidth="3*"
+                                      Style="{StaticResource NumericUpDownExtend}" Margin="10 1"
                                       Value="{Binding Task.Alpha}" />
-                    <hc:NumericUpDown hc:InfoElement.Title="Нормирующий множитель β" hc:InfoElement.TitlePlacement="Left" hc:InfoElement.TitleWidth="3*"
-                                  Style="{StaticResource NumericUpDownExtend}"  Margin="10 1"
-                                  Value="{Binding Task.Beta}" />
-                    <hc:NumericUpDown hc:InfoElement.Title="Нормирующий множитель μ" hc:InfoElement.TitlePlacement="Left" hc:InfoElement.TitleWidth="3*"
-                                  Style="{StaticResource NumericUpDownExtend}"  Margin="10 1"
-                                  Value="{Binding Task.Mu}" />
-                    <hc:NumericUpDown hc:InfoElement.Title="Высота теплообменника H, м" hc:InfoElement.TitlePlacement="Left" hc:InfoElement.TitleWidth="3*"
-                                  Style="{StaticResource NumericUpDownExtend}"  Margin="10 1"
-                                  Value="{Binding Task.H}" />
+                    <hc:NumericUpDown hc:InfoElement.Title="Нормирующий множитель β"
+                                      hc:InfoElement.TitlePlacement="Left" hc:InfoElement.TitleWidth="3*"
+                                      Style="{StaticResource NumericUpDownExtend}" Margin="10 1"
+                                      Value="{Binding Task.Beta}" />
+                    <hc:NumericUpDown hc:InfoElement.Title="Нормирующий множитель μ"
+                                      hc:InfoElement.TitlePlacement="Left" hc:InfoElement.TitleWidth="3*"
+                                      Style="{StaticResource NumericUpDownExtend}" Margin="10 1"
+                                      Value="{Binding Task.Mu}" />
+                    <hc:NumericUpDown hc:InfoElement.Title="Высота теплообменника H, м"
+                                      hc:InfoElement.TitlePlacement="Left" hc:InfoElement.TitleWidth="3*"
+                                      Style="{StaticResource NumericUpDownExtend}" Margin="10 1"
+                                      Value="{Binding Task.H}" />
                     <hc:NumericUpDown hc:InfoElement.Title="Число витков змеевика N" hc:InfoElement.TitleWidth="3*"
-                                  hc:InfoElement.TitlePlacement="Left" Style="{StaticResource NumericUpDownExtend}"
-                                  Margin="10 1" Value="{Binding Task.N}" />
+                                      hc:InfoElement.TitlePlacement="Left" Style="{StaticResource NumericUpDownExtend}"
+                                      Margin="10 1" Value="{Binding Task.N}" />
+                    <hc:NumericUpDown hc:InfoElement.Title="Стоимость производства 1 кг, у.е"
+                                      hc:InfoElement.TitleWidth="3*"
+                                      hc:InfoElement.TitlePlacement="Left" Style="{StaticResource NumericUpDownExtend}"
+                                      Margin="10 1" Value="{Binding Task.Price}" />
                     <hc:NumericUpDown hc:InfoElement.Title="Точность решения" hc:InfoElement.TitleWidth="3*"
                                       hc:InfoElement.TitlePlacement="Left" Style="{StaticResource NumericUpDownExtend}"
-                                       Margin="10 1" Value="{Binding Task.Step}" />
+                                      Margin="10 1" Value="{Binding Task.Step}" />
 
                 </StackPanel>
 
@@ -68,35 +77,34 @@
                     <StackPanel>
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1.2*"/>
-                                <ColumnDefinition Width="5*"/>
-                                <ColumnDefinition Width="1.2*"/>
+                                <ColumnDefinition Width="1.2*" />
+                                <ColumnDefinition Width="5*" />
+                                <ColumnDefinition Width="1.2*" />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
-                                <RowDefinition/>
-                                <RowDefinition/>
+                                <RowDefinition />
+                                <RowDefinition />
                             </Grid.RowDefinitions>
                             <hc:NumericUpDown Grid.Column="0"
-                                          Value="{Binding Task.Lmin}" />
-                            <Label Grid.Column="1" HorizontalAlignment="Stretch"  >≤ Длина теплообменного устройства, м ≤</Label>
-                            <hc:NumericUpDown   Grid.Column="2"
-                                            Value="{Binding Task.Lmax}" />
+                                              Value="{Binding Task.Lmin}" />
+                            <Label Grid.Column="1" HorizontalAlignment="Stretch">≤ Длина теплообменного устройства, м ≤</Label>
+                            <hc:NumericUpDown Grid.Column="2"
+                                              Value="{Binding Task.Lmax}" />
 
-                            <hc:NumericUpDown Grid.Row="1"  Grid.Column="0" 
-                                          Value="{Binding Task.Smin}" />
-                            <Label Grid.Row="1"  Grid.Column="1" HorizontalAlignment="Stretch" >≤ Ширина теплообменного устройства, м ≤</Label>
-                            <hc:NumericUpDown Grid.Row="1"  Grid.Column="2" 
-                                          Value="{Binding Task.Smax}" />
+                            <hc:NumericUpDown Grid.Row="1" Grid.Column="0"
+                                              Value="{Binding Task.Smin}" />
+                            <Label Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch">≤ Ширина теплообменного устройства, м ≤</Label>
+                            <hc:NumericUpDown Grid.Row="1" Grid.Column="2"
+                                              Value="{Binding Task.Smax}" />
 
                         </Grid>
-                        <hc:ElementGroup Orientation="Horizontal" Margin="5">
-
-                        </hc:ElementGroup>
+                        <hc:ElementGroup Orientation="Horizontal" Margin="5" />
 
                         <hc:NumericUpDown hc:InfoElement.Title="Сумма длины и ширины (L+S), м ≥"
-                                      hc:InfoElement.TitlePlacement="Left" Style="{StaticResource NumericUpDownExtend}"
-                                      HorizontalAlignment="Left" 
-                                      Value="{Binding Task.DimSum}" />
+                                          hc:InfoElement.TitlePlacement="Left"
+                                          Style="{StaticResource NumericUpDownExtend}"
+                                          HorizontalAlignment="Left"
+                                          Value="{Binding Task.DimSum}" />
 
 
                     </StackPanel>
@@ -106,7 +114,7 @@
             </StackPanel>
             <Button Grid.Row="1" Margin="5" Command="{Binding CalculateCommand}">Рассчитать</Button>
         </Grid>
-        
+
 
         <DataGrid Grid.Row="1" Grid.Column="1" ItemsSource="{Binding DataList}" AutoGenerateColumns="True"
                   AutoGeneratingColumn="OnAutoGeneratingColumn" ColumnWidth="*" />

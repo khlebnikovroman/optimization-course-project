@@ -1,37 +1,50 @@
-﻿using System;
-using OptimizatonMethods.Models;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
-using OptimizatonMethods.Services;
+
+using OptimizatonMethods.Models;
+
 using WPF_MVVM_Classes;
+
 using ViewModelBase = OptimizatonMethods.Services.ViewModelBase;
+
 
 namespace OptimizatonMethods.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        #region Variables
+    #region Constructors
+
+        public MainWindowViewModel()
+        {
+            Task = new Task
+                {Alpha = 1, Beta = 1, Mu = 1, H = 9, N = 10, DimSum = 11, Lmin = 1, Lmax = 15, Smin = 1, Smax = 12, Price = 100, Step = 0.1,};
+        }
+
+    #endregion
+
+
+    #region Variables
+
         private IEnumerable<Method> _allMethods;
         private IEnumerable<Task> _allTasks;
         private Task _selectedTask;
         private RelayCommand? _calculateCommand;
         private IEnumerable _dataList;
         private List<Point3D> _point3D = new();
-        #endregion
 
-        #region Constructors
-        public MainWindowViewModel()
-        {
-            _task = new Task(){Alpha = 1, Beta = 1, Mu = 1, H = 9, N=10, DimSum = 11, Lmin = 1, Lmax = 15, Smin = 1, Smax = 12, Price = 100, Step = 0.1} ;
-        }
-        #endregion
+    #endregion
 
-        #region Properties
+
+    #region Properties
+
         public IEnumerable<Method> AllMethods
         {
-            get => _allMethods;
+            get
+            {
+                return _allMethods;
+            }
             set
             {
                 _allMethods = value;
@@ -41,7 +54,10 @@ namespace OptimizatonMethods.ViewModels
 
         public IEnumerable<Task> AllTasks
         {
-            get => _allTasks;
+            get
+            {
+                return _allTasks;
+            }
             set
             {
                 _allTasks = value;
@@ -49,23 +65,14 @@ namespace OptimizatonMethods.ViewModels
             }
         }
 
-        private Task _task;
-
-        public Task Task
-        {
-            get
-            {
-                return _task;
-            }
-            set
-            {
-                _task = value;
-            }
-        }
+        public Task Task { get; set; }
 
         public IEnumerable DataList
         {
-            get => _dataList;
+            get
+            {
+                return _dataList;
+            }
             set
             {
                 _dataList = value;
@@ -73,9 +80,10 @@ namespace OptimizatonMethods.ViewModels
             }
         }
 
-        #endregion
+    #endregion
 
-        #region Command
+
+    #region Command
 
         public RelayCommand CalculateCommand
         {
@@ -97,7 +105,6 @@ namespace OptimizatonMethods.ViewModels
                     MessageBox.Show($"Минимальная себестоимость, у.е.: {temp.Min()}\n " +
                                     $"Температура в змеевике Т1, С: {points3D.Find(x => x.Z == temp.Min()).X}\n " +
                                     $"Температура в диффузоре Т2, С: {points3D.Find(x => x.Z == temp.Min()).Y}");
-
                 });
             }
         }
@@ -111,8 +118,6 @@ namespace OptimizatonMethods.ViewModels
                     var test = new Chart2DWindow(DataList as List<Point3D>, Task);
                     test.Show();
                 });
-                
-
             }
         }
 
@@ -128,10 +133,6 @@ namespace OptimizatonMethods.ViewModels
             }
         }
 
-
-
-        #endregion
-
-
+    #endregion
     }
 }

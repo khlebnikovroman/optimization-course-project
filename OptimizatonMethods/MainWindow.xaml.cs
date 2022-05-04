@@ -2,12 +2,13 @@
 using System.Windows;
 using System.Windows.Controls;
 
+
 namespace OptimizatonMethods
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    ///     Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow 
+    public partial class MainWindow
     {
         public MainWindow()
         {
@@ -24,7 +25,7 @@ namespace OptimizatonMethods
 
         private void MainWindow_OnSizeChanged(object sender, SizeChangedEventArgs e)
         {
-           // FontSize = (ActualHeight + ActualHeight / ActualWidth * ActualWidth) / 75;
+            // FontSize = (ActualHeight + ActualHeight / ActualWidth * ActualWidth) / 75;
         }
     }
 }

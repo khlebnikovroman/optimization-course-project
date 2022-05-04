@@ -1,12 +1,10 @@
-﻿using System.ComponentModel;
-
-using PropertyChanged;
+﻿using PropertyChanged;
 
 
 namespace OptimizatonMethods
 {
     [AddINotifyPropertyChangedInterface]
-    public partial class Task
+    public class Task
     {
         public double? Alpha { get; set; }
         public double? Beta { get; set; }

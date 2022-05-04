@@ -1,34 +1,38 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+
 using ChartDirector;
+
 using OptimizatonMethods.Models;
+
 
 namespace OptimizatonMethods
 {
     /// <summary>
-    /// Логика взаимодействия для Chart3DWindow.xaml
+    ///     Логика взаимодействия для Chart3DWindow.xaml
     /// </summary>
     public partial class Chart3DWindow : Window
     {
         private readonly List<Point3D> _dataList;
         private readonly Task _task;
 
+        // 3D view angles
+        private double m_elevationAngle;
+        private bool m_isDragging;
+
+        // Keep track of mouse drag
+        private int m_lastMouseX;
+        private int m_lastMouseY;
+        private double m_rotationAngle;
+
         public Chart3DWindow(List<Point3D> dataList, Task task)
         {
             _dataList = dataList;
             _task = task;
             InitializeComponent();
+
             // 3D view angles
             m_elevationAngle = 30;
             m_rotationAngle = 45;
@@ -48,23 +52,30 @@ namespace OptimizatonMethods
         }
 
         //Name of demo module
-        public string getName() { return "Surface Chart (2)"; }
+        public string getName()
+        {
+            return "Surface Chart (2)";
+        }
 
         //Number of charts produced in this demo module
-        public int getNoOfCharts() { return 1; }
+        public int getNoOfCharts()
+        {
+            return 1;
+        }
 
         //Main code for creating chart.
         //Note: the argument chartIndex is unused because this demo only has 1 chart.
         public void createChart(WPFChartViewer viewer, int chartIndex)
         {
-            double[] dataX = new double[] { -18, -17, -16, -15, -14, -13, -12, -11, -10, -9, -8, -7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7 };
-            double[] dataY = new double[] { -8, -7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8 };
-            double[] dataZ = new double[dataX.Length * dataY.Length];
+            double[] dataX = {-18, -17, -16, -15, -14, -13, -12, -11, -10, -9, -8, -7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7,};
+            double[] dataY = {-8, -7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8,};
+            var dataZ = new double[dataX.Length * dataY.Length];
             var k = 0;
             var math = new MathModel(_task);
-            for (int i = 0; i < dataX.Length; i++)
+
+            for (var i = 0; i < dataX.Length; i++)
             {
-                for (int j = 0; j < dataY.Length; j++)
+                for (var j = 0; j < dataY.Length; j++)
                 {
                     if (Math.Abs(dataY[j] - dataX[i]) < 2)
                     {
@@ -81,13 +92,14 @@ namespace OptimizatonMethods
                         {
                             dataZ[k] = 1000;
                         }
+
                         k++;
                     }
                 }
             }
 
             // Create a SurfaceChart object of size 680 x 580 pixels
-            SurfaceChart c = new SurfaceChart(680, 580);
+            var c = new SurfaceChart(680, 580);
 
             // Set the center of the plot region at (310, 280), and set width x depth x height to
             // 320 x 320 x 240 pixels
@@ -95,19 +107,22 @@ namespace OptimizatonMethods
 
             // Set the elevation and rotation angles to 30 and 45 degrees
             c.setViewAngle(m_elevationAngle, m_rotationAngle);
+
             if (m_isDragging && DrawFrameOnRotate.IsChecked.Value)
+            {
                 c.setShadingMode(Chart.RectangularFrame);
+            }
 
             // Set the data to use to plot the chart
             c.setData(dataX, dataY, dataZ);
-            
+
             // Spline interpolate data to a 80 x 80 grid for a smooth surface
             c.setInterpolation(80, 80);
 
             // Use semi-transparent black (c0000000) for x and y major surface grid lines. Use
             // dotted style for x and y minor surface grid lines.
-            int majorGridColor = unchecked((int)0xc0000000);
-            int minorGridColor = c.dashLineColor(majorGridColor, Chart.DotLine);
+            var majorGridColor = unchecked((int) 0xc0000000);
+            var minorGridColor = c.dashLineColor(majorGridColor, Chart.DotLine);
             c.setSurfaceAxisGrid(majorGridColor, majorGridColor, minorGridColor, minorGridColor);
 
             // Add XY projection
@@ -130,29 +145,22 @@ namespace OptimizatonMethods
 
             //include tool tip for the chart
             viewer.ImageMap = c.getHTMLImageMap("clickable", "",
-                "title='<*cdml*>X: {x|2}<*br*>Y: {y|2}<*br*>Z: {z|2}'");
+                                                "title='<*cdml*>X: {x|2}<*br*>Y: {y|2}<*br*>Z: {z|2}'");
         }
-
-        // 3D view angles
-        private double m_elevationAngle;
-        private double m_rotationAngle;
-
-        // Keep track of mouse drag
-        private int m_lastMouseX;
-        private int m_lastMouseY;
-        private bool m_isDragging;
 
         private void WPFChartViewer1_ViewPortChanged(object sender, WPFViewPortEventArgs e)
         {
             // Update the chart if necessary
             if (e.NeedUpdateChart)
-                createChart((WPFChartViewer)sender, 1);
+            {
+                createChart((WPFChartViewer) sender, 1);
+            }
         }
 
         private void WPFChartViewer1_MouseMoveChart(object sender, MouseEventArgs e)
         {
-            int mouseX = WPFChartViewer1.ChartMouseX;
-            int mouseY = WPFChartViewer1.ChartMouseY;
+            var mouseX = WPFChartViewer1.ChartMouseX;
+            var mouseY = WPFChartViewer1.ChartMouseY;
 
             // Drag occurs if mouse button is down and the mouse is captured by the m_ChartViewer
             if (Mouse.LeftButton == MouseButtonState.Pressed)
