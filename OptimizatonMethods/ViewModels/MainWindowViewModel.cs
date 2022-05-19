@@ -103,8 +103,8 @@ namespace OptimizatonMethods.ViewModels
                     }
 
                     MessageBox.Show($"Минимальная себестоимость, у.е.: {temp.Min()}\n " +
-                                    $"Температура в змеевике Т1, С: {points3D.Find(x => x.Z == temp.Min()).X}\n " +
-                                    $"Температура в диффузоре Т2, С: {points3D.Find(x => x.Z == temp.Min()).Y}");
+                                    $"Длина:, м: {points3D.Find(x => x.Z == temp.Min()).X}\n " +
+                                    $"Ширина, С: {points3D.Find(x => x.Z == temp.Min()).Y}");
                 });
             }
         }

@@ -12,10 +12,10 @@ namespace OptimizatonMethods.Models
             Z = z;
         }
 
-        [DisplayName("Температура в змеевике")]
+        [DisplayName("Длина")]
         public double X { get; set; }
 
-        [DisplayName("Температура в диффузоре")]
+        [DisplayName("Ширина")]
         public double Y { get; set; }
 
         [DisplayName("Себестоимость продукта")]

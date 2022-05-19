@@ -56,7 +56,7 @@ namespace OptimizatonMethods.Models
 
         public void Calculate(out List<Point3D> points3D)
         {
-            var funcMin = double.MaxValue;
+            var funcMin = double.PositiveInfinity;
             _step = Math.Pow(_k, _r) * _epsilon;
             points3D = new List<Point3D>();
             var p3D = new List<Point3D>();
