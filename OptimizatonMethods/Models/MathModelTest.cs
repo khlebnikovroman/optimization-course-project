@@ -302,11 +302,11 @@ namespace OptimizatonMethods.Models
             Point newMin;
 
             newMin = SearchMinOnGrid(out p3D, out values); 
-            p1.min = newMin.X - _step;
-            p2.min = newMin.Y - _step;
+            //p1.min = newMin.X - _step;
+            //p2.min = newMin.Y - _step;
 
-            p1.max = newMin.X + _step;
-            p2.max = newMin.Y + _step;
+            //p1.max = newMin.X + _step;
+            //p2.max = newMin.Y + _step;
 
             _step /= _k;
             points3D.AddRange(p3D);
@@ -315,11 +315,11 @@ namespace OptimizatonMethods.Models
             {
                 newMin = SearchMinOnGrid(out p3D, out values);
 
-                p1.min = newMin.X - _step;
-                p2.min = newMin.Y - _step;
+                //p1.min = newMin.X - _step;
+                //p2.min = newMin.Y - _step;
 
-                p1.max = newMin.X + _step;
-                p2.max = newMin.Y + _step;
+                //p1.max = newMin.X + _step;
+                //p2.max = newMin.Y + _step;
 
                 _step /= _k;
                 funcMin = values.Min();

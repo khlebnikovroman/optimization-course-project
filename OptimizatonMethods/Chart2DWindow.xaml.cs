@@ -41,35 +41,24 @@ namespace OptimizatonMethods
             {
                 dataY.Add(i);
             }
-            //double[] dataX = {-18, -17, -16, -15, -14, -13, -12, -11, -10, -9, -8, -7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7,};
-            //double[] dataY = {-8, -7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8,};
             var dataZ = new List<double>();
+
+            for (int i = 0; i < dataX.Count; i++)
+            {
+                for (int j = 0; j < dataY.Count; j++)
+                {
+                    dataZ.Add(0);
+                }
+            }
             var k = 0;
 
-            for (var i = 0; i < dataX.Count; i++)
+            for (int i = 0; i < dataX.Count; i++)
             {
-                for (var j = 0; j < dataY.Count; j++)
+                for (int j = 0; j < dataY.Count; j++)
                 {
-                    //if (Math.Abs(dataY[j] - dataX[i]) < 2)
-                    //{
-                    //    dataZ[k] = -1;
-                    //    k++;
-                    //}
-                    //else
-                    //{
-                        mathModel.p1.parameter.Value = dataX[i];
-                        mathModel.p2.parameter.Value = dataY[j];
-                        if (mathModel.Function() < 1000)
-                        {
-                            dataZ.Add(mathModel.Function());
-                        }
-                        else
-                        {
-                            dataZ.Add(1000); 
-                        }
-
-                        //k++;
-                    //}
+                    mathModel.p1.parameter.Value = dataX[i];
+                    mathModel.p2.parameter.Value = dataY[j];
+                    dataZ[j*dataX.Count+i]= mathModel.Function();
                 }
             }
 
@@ -85,8 +74,8 @@ namespace OptimizatonMethods
             c.addTitle("     <*block,bgcolor=FFFF00*> *** Drag Crosshair to Move Cross Section *** <*/*>",
                        "Arial Bold", 15);
 
-            c.xAxis().setTitle("X-Axis Title Place Holder", "Arial Bold Italic", 10);
-            c.yAxis().setTitle("Y-Axis Title Place Holder", "Arial Bold Italic", 10);
+            c.xAxis().setTitle(mathModel.p1.parameter.ToString(), "Arial Bold Italic", 10);
+            c.yAxis().setTitle(mathModel.p2.parameter.ToString(), "Arial Bold Italic", 10);
 
             // Put the y-axis on the right side of the chart
             c.setYAxisOnRight();

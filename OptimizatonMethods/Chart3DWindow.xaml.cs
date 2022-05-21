@@ -18,6 +18,7 @@ namespace OptimizatonMethods
         private readonly List<Point3D> _dataList;
         private readonly Task _task;
 
+        private MathModelTest mathModel;
         // 3D view angles
         private double m_elevationAngle;
         private bool m_isDragging;
@@ -27,10 +28,9 @@ namespace OptimizatonMethods
         private int m_lastMouseY;
         private double m_rotationAngle;
 
-        public Chart3DWindow(List<Point3D> dataList, Task task)
+        public Chart3DWindow(MathModelTest math)
         {
-            _dataList = dataList;
-            _task = task;
+            mathModel = math;
             InitializeComponent();
 
             // 3D view angles
@@ -67,34 +67,36 @@ namespace OptimizatonMethods
         //Note: the argument chartIndex is unused because this demo only has 1 chart.
         public void createChart(WPFChartViewer viewer, int chartIndex)
         {
-            double[] dataX = {-18, -17, -16, -15, -14, -13, -12, -11, -10, -9, -8, -7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7,};
-            double[] dataY = {-8, -7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8,};
-            var dataZ = new double[dataX.Length * dataY.Length];
-            var k = 0;
-            var math = new MathModel(_task);
+            var dataX = new List<double>();
+            var dataY = new List<double>();
+            var step = 1;
 
-            for (var i = 0; i < dataX.Length; i++)
+            for (double i = mathModel.p1.min - step; i < mathModel.p1.max + step; i += step)
             {
-                for (var j = 0; j < dataY.Length; j++)
-                {
-                    if (Math.Abs(dataY[j] - dataX[i]) < 2)
-                    {
-                        dataZ[k] = -1;
-                        k++;
-                    }
-                    else
-                    {
-                        if (math.Function(dataX[i], dataY[j]) < 1000)
-                        {
-                            dataZ[k] = math.Function(dataX[i], dataY[j]);
-                        }
-                        else
-                        {
-                            dataZ[k] = 1000;
-                        }
+                dataX.Add(i);
+            }
+            for (double i = mathModel.p2.min - step; i < mathModel.p2.max + step; i += step)
+            {
+                dataY.Add(i);
+            }
+            var dataZ = new List<double>();
 
-                        k++;
-                    }
+            for (int i = 0; i < dataX.Count; i++)
+            {
+                for (int j = 0; j < dataY.Count; j++)
+                {
+                    dataZ.Add(0);
+                }
+            }
+            var k = 0;
+
+            for (int i = 0; i < dataX.Count; i++)
+            {
+                for (int j = 0; j < dataY.Count; j++)
+                {
+                    mathModel.p1.parameter.Value = dataX[i];
+                    mathModel.p2.parameter.Value = dataY[j];
+                    dataZ[j * dataX.Count + i] = mathModel.Function();
                 }
             }
 
@@ -114,7 +116,7 @@ namespace OptimizatonMethods
             }
 
             // Set the data to use to plot the chart
-            c.setData(dataX, dataY, dataZ);
+            c.setData(dataX.ToArray(), dataY.ToArray(), dataZ.ToArray());
 
             // Spline interpolate data to a 80 x 80 grid for a smooth surface
             c.setInterpolation(80, 80);

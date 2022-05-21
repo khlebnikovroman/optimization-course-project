@@ -127,8 +127,8 @@ namespace OptimizatonMethods.ViewModels
             {
                 return new RelayCommand(r =>
                 {
-                    var test = new Chart3DWindow(DataList as List<Point3D>, Task);
-                    test.Show();
+                    //var test = new Chart3DWindow(DataList as List<Point3D>, Task);
+                    //test.Show();
                 });
             }
         }
