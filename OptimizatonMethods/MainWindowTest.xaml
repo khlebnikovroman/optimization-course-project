@@ -42,7 +42,7 @@
 
                 <controls:FormulaControl Scale="25" Margin="10"
                                          Formula="P = \alpha  * (L - S)^2 + \beta  * 1 / H * (S+ L -  \gamma  *N)^2" />
-
+                <ComboBox ItemsSource="{Binding variants}" DisplayMemberPath="Key" SelectedItem="{Binding SelectedVariant}"/>
                 <ListBox ItemsSource="{Binding mathModel.parameters}">
                     <ListBox.ItemContainerStyle>
                         <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource ListBoxItemBaseStyle}">

@@ -33,7 +33,9 @@ namespace OptimizatonMethods.ViewModels
             {
                 variants[variant.GetProperty("displayName").GetString()]=variant;
             }
-            mathModel = new MathModelTest(variants.ElementAt(0).Value);
+
+            SelectedVariant = variants.ElementAt(0);
+            //mathModel = new MathModelTest(variants.ElementAt(0).Value);
             OnPropertyChanged(nameof(mathModel));
         }
 
@@ -41,7 +43,8 @@ namespace OptimizatonMethods.ViewModels
 
 
         #region Variables
-        private Dictionary<string, JsonElement> variants;
+
+        public Dictionary<string, JsonElement> variants { get; set; }
         private IEnumerable<Method> _allMethods;
         private IEnumerable<Task> _allTasks;
         private Task _selectedTask;
@@ -53,6 +56,21 @@ namespace OptimizatonMethods.ViewModels
 
 
         #region Properties
+
+            private KeyValuePair<string, JsonElement> _selectedVariant;
+            public KeyValuePair<string, JsonElement> SelectedVariant
+            {
+                get
+                {
+                    return _selectedVariant;
+                }
+                set
+                {
+                    _selectedVariant=value;
+                    mathModel=new MathModelTest(value.Value);
+                    OnPropertyChanged();
+                }
+            }
         public MathModelTest mathModel { get; set; }
 
 
@@ -104,8 +122,8 @@ namespace OptimizatonMethods.ViewModels
             {
                 return new RelayCommand(r =>
                 {
-                    //var test = new Chart2DWindow(DataList as List<Point3D>, Task);
-                    //test.Show();
+                    var test = new Chart2DWindow(mathModel);
+                    test.Show();
                 });
             }
         }

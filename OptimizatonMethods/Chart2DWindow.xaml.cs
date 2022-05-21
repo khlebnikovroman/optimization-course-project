@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 
 using ChartDirector;
@@ -16,46 +17,59 @@ namespace OptimizatonMethods
     {
         private readonly List<Point3D> _dataList = new();
         private readonly Task _task;
+        private readonly MathModelTest mathModel;
         private ContourLayer contourLayer;
 
 
-        public Chart2DWindow(List<Point3D> dataList, Task task)
+        public Chart2DWindow(MathModelTest mathModel)
         {
-            _dataList = dataList;
-            _task = task;
+            this.mathModel = mathModel;
             InitializeComponent();
         }
 
         private void drawChart(WPFChartViewer viewer)
         {
-            double[] dataX = {-18, -17, -16, -15, -14, -13, -12, -11, -10, -9, -8, -7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7,};
-            double[] dataY = {-8, -7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8,};
-            var dataZ = new double[dataX.Length * dataY.Length];
-            var k = 0;
-            var math = new MathModel(_task);
+            var dataX = new List<double>();
+            var dataY = new List<double>();
+            var step = 1;
 
-            for (var i = 0; i < dataX.Length; i++)
+            for (double i = mathModel.p1.min-step; i < mathModel.p1.max+step; i+=step)
             {
-                for (var j = 0; j < dataY.Length; j++)
+                dataX.Add(i);
+            }
+            for (double i = mathModel.p2.min - step; i < mathModel.p2.max + step; i += step)
+            {
+                dataY.Add(i);
+            }
+            //double[] dataX = {-18, -17, -16, -15, -14, -13, -12, -11, -10, -9, -8, -7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7,};
+            //double[] dataY = {-8, -7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8,};
+            var dataZ = new List<double>();
+            var k = 0;
+
+            for (var i = 0; i < dataX.Count; i++)
+            {
+                for (var j = 0; j < dataY.Count; j++)
                 {
-                    if (Math.Abs(dataY[j] - dataX[i]) < 2)
-                    {
-                        dataZ[k] = -1;
-                        k++;
-                    }
-                    else
-                    {
-                        if (math.Function(dataX[i], dataY[j]) < 1000)
+                    //if (Math.Abs(dataY[j] - dataX[i]) < 2)
+                    //{
+                    //    dataZ[k] = -1;
+                    //    k++;
+                    //}
+                    //else
+                    //{
+                        mathModel.p1.parameter.Value = dataX[i];
+                        mathModel.p2.parameter.Value = dataY[j];
+                        if (mathModel.Function() < 1000)
                         {
-                            dataZ[k] = math.Function(dataX[i], dataY[j]);
+                            dataZ.Add(mathModel.Function());
                         }
                         else
                         {
-                            dataZ[k] = 1000;
+                            dataZ.Add(1000); 
                         }
 
-                        k++;
-                    }
+                        //k++;
+                    //}
                 }
             }
 
@@ -82,11 +96,11 @@ namespace OptimizatonMethods
             c.yAxis().setLabelStyle("Arial", 10);
 
             // When auto-scaling, use tick spacing of 40 pixels as a guideline
-            c.xAxis().setLinearScale(-18, 7, 1);
-            c.yAxis().setLinearScale(-8, 8, 1);
+            c.xAxis().setLinearScale(dataX.Min(), dataX.Max(), 1);
+            c.yAxis().setLinearScale(dataY.Min(), dataY.Max(), 1);
 
             // Add a contour layer using the given data
-            contourLayer = c.addContourLayer(dataX, dataY, dataZ);
+            contourLayer = c.addContourLayer(dataX.ToArray(), dataY.ToArray(), dataZ.ToArray());
             contourLayer.setContourLabelFormat("<*font=Arial Bold,size=10*>{value}<*/font*>");
 
             contourLayer.setZBounds(0);
