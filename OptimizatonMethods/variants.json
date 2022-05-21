@@ -1,8 +1,10 @@
 [
   {
     "displayName": "1 Вариант",
-    "functionLatex": "",
-    "function": "a*( A1^2 +b* A2 - u*V1)^ N + a1*(b1*A1 + A2^2 - u1*V2)^N",
+    "desiredParameterName": "Выход целевого компонента, кг",
+    "minmax": "max",
+    "functionLatex": "C =\\alpha(A_1^2+\\beta A_2 - \\mu V_{1})^{N}+\\alpha(\\beta_1\\alpha_1 +\\alpha_2^2-\\mu_1V_2)^N",
+    "function": "shift*a*(A1^2+b*A2-u*V1)^N+A1*(b1*A1+A2^2-u1*V2)^N",
     "parameters": [
       {
         "displayName": "Нормирующий множитель",
@@ -59,6 +61,13 @@
         "defaultValue": 7
       },
       {
+        "displayName": "Рабочая смена",
+        "symbol": "shift",
+        "unit": "час",
+        "defaultValue": 8
+      },
+
+      {
         "displayName": "Объемный расход",
         "symbol": "A1",
         "unit": "м^3",
@@ -102,8 +111,102 @@
     ]
   },
   {
-    "displayName": "16 Вариант",
-    "functionLatex": "",
+    "displayName": "2 Вариант",
+    "desiredParameterName": "Выход фильтрата, м^3",
+    "minmax": "max",
+    "functionLatex": "V=\\alpha*(T_1-\\beta\\Delta p_1)\\cos(\\gamma\\Delta p_2 \\sqrt{(T_1^N+T_2^N)}",
+    "function": "shift*a * (T1 - b* p1) *cos(y*p2 * sqrt(T1^ N + T2^N))",
+    "parameters": [
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "a",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "b",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "y",
+        "unit": "",
+        "defaultValue": 3.14
+      },
+      {
+        "displayName": "Количество  перегородок",
+        "symbol": "N",
+        "unit": "",
+        "defaultValue": 2
+      },
+      {
+        "displayName": "Величина перепада давления на первой перегородке",
+        "symbol": "p1",
+        "unit": "КПа",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Величина перепада давления на второй перегородке",
+        "symbol": "p2",
+        "unit": "КПа",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Рабочая смена",
+        "symbol": "shift",
+        "unit": "час",
+        "defaultValue": 8
+      },
+      {
+        "displayName": "Температура на первой перегородке",
+        "symbol": "T1",
+        "unit": "°C",
+        "desired": true,
+        "defaultValue": 7
+      },
+      {
+        "displayName": "Температура на второй перегородке",
+        "symbol": "T2",
+        "unit": "°C",
+        "desired": true,
+        "defaultValue": 7
+      }
+    ],
+    "restrictions": [
+      {
+        "displayName": "Разница температур, (T2-T1) °C  >=",
+        "func": "T2-T1 >= value",
+        "value": 3
+      },
+      {
+        "displayName": "Температура на первой перегородке T1, °C >=",
+        "func": "T1 >= value",
+        "value": -3
+      },
+      {
+        "displayName": "Температура на первой перегородке T1, °C <=",
+        "func": "T1 <= value",
+        "value": 0
+      },
+      {
+        "displayName": "Температура на второй перегородке T2, °C >=",
+        "func": "T2 >= value",
+        "value": -0.5
+      },
+      {
+        "displayName": "Температура на второй перегородке T2, °C <=",
+        "func": "T2 <= value",
+        "value": 3
+      }
+    ]
+  },
+  {
+    "displayName": "3 Вариант",
+    "functionLatex": "P= \\alpha*(L-S)^2 + \\beta*1/H*(S+L-\\gamma*N)^2",
+    "desiredParameterName": "Затраты на изготовление изделия",
+    "minmax": "min",
     "function": "price*a*(L-S)^2 + b*1/H*(S+L-u*N)^2",
     "parameters": [
       {
@@ -187,9 +290,203 @@
     ]
   },
   {
-    "displayName": "2 Вариант",
-    "functionLatex": "",
-    "function": "α * (T1 - b∙ ∆р1) ∙cos(γ∙∆р2 sqrt(T1^ N + T2^N)",
+    "displayName": "4 Вариант",
+    "functionLatex": "S=\\alpha*G*( (T_2- \\beta* A)^N +  u *{e^{(T_1+T_2)}}^{N} +\\Delta *( T_2- T_1))",
+    "desiredParameterName": "Себестоимость целевого компонента",
+    "minmax": "min",
+    "function": "price*a*G*( (T2- b* A)^N +  u *exp(T1+T2) ^N +delta *( T2- T1))",
+    "parameters": [
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "a",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "b",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "u",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "delta",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Расход реакционной массы",
+        "symbol": "G",
+        "unit": "кг/ч",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Давление в реакторе",
+        "symbol": "A",
+        "unit": "КПа",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Количество теплообменных устройств",
+        "symbol": "N",
+        "unit": "",
+        "defaultValue": 2
+      },
+      {
+        "displayName": "Стоимость производства 1 кг",
+        "symbol": "price",
+        "displaySymbol": false,
+        "unit": "у.е.",
+        "defaultValue": 10
+      },
+      {
+        "displayName": "Температура в змеевике",
+        "symbol": "T1",
+        "unit": "°C",
+        "desired": true,
+        "defaultValue": 0
+      },
+      {
+        "displayName": "Температура в диффузоре",
+        "symbol": "T2",
+        "unit": "°C",
+        "desired": true,
+        "defaultValue": 0
+      }
+    ],
+    "restrictions": [
+      {
+        "displayName": "Разница температур (T2-T1), °C >=",
+        "func": "T2-T1 >= value",
+        "value": 2
+      },
+      {
+        "displayName": "Температура в змеевике T1, °C >=",
+        "func": "T1 >= value",
+        "value": -18
+      },
+      {
+        "displayName": "Температура в змеевике T1, °C <=",
+        "func": "T1 <= value",
+        "value": 7
+      },
+      {
+        "displayName": "Температура в диффузоре T2, °C >=",
+        "func": "T2 >= value",
+        "value": -8
+      },
+      {
+        "displayName": "Температура в диффузоре T2, °C <=",
+        "func": "T2 <= value",
+        "value": 8
+      }
+    ]
+  },
+  {
+    "displayName": "5 Вариант",
+    "functionLatex": "S =\\alpha(G\\mu((T_2-T_1)^N+(\\beta A-T_1)^N))",
+    "desiredParameterName": "Себестоимость целевого компонента",
+    "minmax": "min",
+    "function": "price*a*(G* u *((T2- T1)^N +(b *A-T1)^N))",
+    "parameters": [
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "a",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "b",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "u",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Расход реакционной массы",
+        "symbol": "G",
+        "unit": "кг/ч",
+        "defaultValue": 2
+      },
+      {
+        "displayName": "Давление в реакторе",
+        "symbol": "A",
+        "unit": "КПа",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Скорость вращения мешалки",
+        "symbol": "N",
+        "unit": "об/c",
+        "defaultValue": 2
+      },
+      {
+        "displayName": "Стоимость производства 1 кг",
+        "symbol": "price",
+        "displaySymbol": false,
+        "unit": "у.е.",
+        "defaultValue": 100
+      },
+      {
+        "displayName": "Температура в змеевике",
+        "symbol": "T1",
+        "unit": "°C",
+        "desired": true,
+        "defaultValue": 0
+      },
+      {
+        "displayName": "Температура в рубашке",
+        "symbol": "T2",
+        "unit": "°C",
+        "desired": true,
+        "defaultValue": 0
+      }
+    ],
+    "restrictions": [
+      {
+        "displayName": "Разница температур (T1+0.5*T2), °C <=",
+        "func": "T1+0.5*T2 <= value",
+        "value": 1
+      },
+      {
+        "displayName": "Температура в змеевике T1, °C >=",
+        "func": "T1 >= value",
+        "value": -3
+      },
+      {
+        "displayName": "Температура в змеевике T1, °C <=",
+        "func": "T1 <= value",
+        "value": 3
+      },
+      {
+        "displayName": "Температура в рубашке T2, °C >=",
+        "func": "T2 >= value",
+        "value": -2
+      },
+      {
+        "displayName": "Температура в рубашке T2, °C <=",
+        "func": "T2 <= value",
+        "value": 6
+      }
+    ]
+  },
+  {
+    "displayName": "6 Вариант",
+    "functionLatex": "C =\\alpha(A_1^2+\\beta A_2 - \\mu V_{1})^{N}+\\alpha(\\beta_1\\alpha_1 +\\alpha_2^2-\\mu_1V_2)^N",
+    "desiredParameterName": "Себестоимость целевого компонента",
+    "minmax": "min",
+    "function": "price*shift*a*(A1^2 +b* A2 - u*V1)^N + A1*(b1*A1 + A2^2 - u1*V2)^N",
     "parameters": [
       {
         "displayName": "Нормирующий множитель",
@@ -246,6 +543,19 @@
         "defaultValue": 7
       },
       {
+        "displayName": "Стоимость производства 1 кг",
+        "symbol": "price",
+        "displaySymbol": false,
+        "unit": "у.е.",
+        "defaultValue": 100
+      },
+      {
+        "displayName": "Рабочая смена",
+        "symbol": "shift",
+        "unit": "час",
+        "defaultValue": 8
+      },
+      {
         "displayName": "Объемный расход",
         "symbol": "A1",
         "unit": "м^3",
@@ -262,9 +572,9 @@
     ],
     "restrictions": [
       {
-        "displayName": "Суммарная производительность, м^3 /час  <=",
-        "func": "A1+A2 <= value",
-        "value": 8
+        "displayName": "Условие: 4*A1 +5*A2 <=",
+        "func": "4*A1 + 5*A2 <= value",
+        "value": 20
       },
       {
         "displayName": "Объемный расход сырьевого компонента A1, м^3 /час >=",
@@ -285,6 +595,2001 @@
         "displayName": "Объемный расход сырьевого компонента A2, м^3 /час <=",
         "func": "A2 <= value",
         "value": 10
+      }
+    ]
+  },
+  {
+    "displayName": "7 Вариант",
+    "functionLatex": "V = \\alpha G(T_1^2+\\beta T_2-\\mu \\Delta p_1)^N+\\gamma (\\beta _1 T_1+T_2^2-\\mu_1 \\Delta p_2)^N",
+    "desiredParameterName": "Себестоимость целевого компонента",
+    "minmax": "min",
+    "function": "price*shift*a* G* (T1^2 +b *T2 - u *p1  )^N +  y *(b1*T1 + T2^2 - u1*p2 )^N",
+    "parameters": [
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "a",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "b",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "u",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "y",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "b1",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "u1",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Количество  перегородок",
+        "symbol": "N",
+        "unit": "",
+        "defaultValue": 2
+      },
+      {
+        "displayName": "Общий  расход  фильтрующей жидкости",
+        "symbol": "G",
+        "unit": "кг/ч",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Величина перепада давления на первой перегородке",
+        "symbol": "p1",
+        "unit": "КПа",
+        "defaultValue": 11
+      },
+      {
+        "displayName": "Величина перепада давления на второй перегородке",
+        "symbol": "p2",
+        "unit": "КПа",
+        "defaultValue": 7
+      },
+      {
+        "displayName": "Стоимость м^3 фильтрата",
+        "symbol": "price",
+        "displaySymbol": false,
+        "unit": "у.е.",
+        "defaultValue": 100
+      },
+      {
+        "displayName": "Рабочая смена",
+        "symbol": "shift",
+        "unit": "час",
+        "defaultValue": 8
+      },
+      {
+        "displayName": "Температура на первой перегородке",
+        "symbol": "T1",
+        "unit": "°C",
+        "desired": true,
+        "defaultValue": 7
+      },
+      {
+        "displayName": "Температура на второй перегородке",
+        "symbol": "T2",
+        "unit": "°C",
+        "desired": true,
+        "defaultValue": 7
+      }
+    ],
+    "restrictions": [
+      {
+        "displayName": "Условие (0.5*T1+T2)<=",
+        "func": "0.5*T1+T2 <= value",
+        "value": 1
+      },
+      {
+        "displayName": "Температура на первой перегородке T1, °C >=",
+        "func": "T1 >= value",
+        "value": -5
+      },
+      {
+        "displayName": "Температура на первой перегородке T1, °C <=",
+        "func": "T1 <= value",
+        "value": 0
+      },
+      {
+        "displayName": "Температура на второй перегородке T2, °C >=",
+        "func": "T2 >= value",
+        "value": -1
+      },
+      {
+        "displayName": "Температура на второй перегородке T2, °C <=",
+        "func": "T2 <= value",
+        "value": 5
+      }
+    ]
+  },
+  {
+    "displayName": "8 Вариант",
+    "functionLatex": "S=\\alpha*G*( (T_2- \\beta* A)^N +  u *{e^{(T_1+T_2)}}^{N} +\\Delta *( T_2- T_1))",
+    "desiredParameterName": "Прибыль от реализации целевого компонента",
+    "minmax": "max",
+    "function": "price*a*G*( (T2- b* A)^N +  u *exp(T1+T2) ^N +delta *( T2- T1))",
+    "parameters": [
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "a",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "b",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "u",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "delta",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Расход реакционной массы",
+        "symbol": "G",
+        "unit": "кг/ч",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Давление в реакторе",
+        "symbol": "A",
+        "unit": "КПа",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Количество теплообменных устройств",
+        "symbol": "N",
+        "unit": "",
+        "defaultValue": 2
+      },
+      {
+        "displayName": "Стоимость производства 1 кг",
+        "symbol": "price",
+        "displaySymbol": false,
+        "unit": "у.е.",
+        "defaultValue": 10
+      },
+      {
+        "displayName": "Температура в змеевике",
+        "symbol": "T1",
+        "unit": "°C",
+        "desired": true,
+        "defaultValue": 0
+      },
+      {
+        "displayName": "Температура в диффузоре",
+        "symbol": "T2",
+        "unit": "°C",
+        "desired": true,
+        "defaultValue": 0
+      }
+    ],
+    "restrictions": [
+      {
+        "displayName": "Разница температур (T2-T1), °C >=",
+        "func": "T1-T2 <= 4",
+        "value": 2
+      },
+      {
+        "displayName": "Температура в змеевике T1, °C >=",
+        "func": "T1 >= value",
+        "value": -18
+      },
+      {
+        "displayName": "Температура в змеевике T1, °C <=",
+        "func": "T1 <= value",
+        "value": 7
+      },
+      {
+        "displayName": "Температура в диффузоре T2, °C >=",
+        "func": "T2 >= value",
+        "value": -8
+      },
+      {
+        "displayName": "Температура в диффузоре T2, °C <=",
+        "func": "T2 <= value",
+        "value": 8
+      }
+    ]
+  },
+  {
+    "displayName": "9 Вариант",
+    "functionLatex": "S =\\alpha(G\\mu((T_2-T_1)^N+(\\beta A-T_1)^N))",
+    "desiredParameterName": "Прибыль от реализации целевого компонента",
+    "minmax": "max",
+    "function": "price*a*(G* u *((T2- T1)^N +(b *A-T1)^N))",
+    "parameters": [
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "a",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "b",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "u",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Расход реакционной массы",
+        "symbol": "G",
+        "unit": "кг/ч",
+        "defaultValue": 2
+      },
+      {
+        "displayName": "Давление в реакторе",
+        "symbol": "A",
+        "unit": "КПа",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Скорость вращения мешалки",
+        "symbol": "N",
+        "unit": "об/c",
+        "defaultValue": 2
+      },
+      {
+        "displayName": "Стоимость производства 1 кг",
+        "symbol": "price",
+        "displaySymbol": false,
+        "unit": "у.е.",
+        "defaultValue": 100
+      },
+      {
+        "displayName": "Температура в змеевике",
+        "symbol": "T1",
+        "unit": "°C",
+        "desired": true,
+        "defaultValue": 0
+      },
+      {
+        "displayName": "Температура в рубашке",
+        "symbol": "T2",
+        "unit": "°C",
+        "desired": true,
+        "defaultValue": 0
+      }
+    ],
+    "restrictions": [
+      {
+        "displayName": "Разница температур (T1-T2), °C >=",
+        "func": "T1-T2 >= value",
+        "value": -3
+      },
+      {
+        "displayName": "Температура в змеевике T1, °C >=",
+        "func": "T1 >= value",
+        "value": -3
+      },
+      {
+        "displayName": "Температура в змеевике T1, °C <=",
+        "func": "T1 <= value",
+        "value": 3
+      },
+      {
+        "displayName": "Температура в рубашке T2, °C >=",
+        "func": "T2 >= value",
+        "value": -2
+      },
+      {
+        "displayName": "Температура в рубашке T2, °C <=",
+        "func": "T2 <= value",
+        "value": 6
+      }
+    ]
+  },
+  {
+    "displayName": "10 Вариант",
+    "functionLatex": "P= \\alpha G ((T_1 - T_2)^2 + \\beta * 1 / H * (T_1+ T_2 - \\gamma N)^2)",
+    "desiredParameterName": "Прибыль от реализации целевого компонента",
+    "minmax": "max",
+    "function": "price*a *G*( (T1 - T2)^2 + b * 1 / H * (T1+ T2 -  y *N)^2)",
+    "parameters": [
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "a",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "b",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "y",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Количество  реакционной массы",
+        "symbol": "G",
+        "unit": "кг/ч",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Давление в реакторе",
+        "symbol": "H",
+        "unit": "КПа",
+        "defaultValue": 9
+      },
+
+      {
+        "displayName": "Скорость вращения мешалки",
+        "symbol": "N",
+        "unit": "об/c",
+        "defaultValue": 10
+      },
+      {
+        "displayName": "Стоимость производства 1 кг",
+        "symbol": "price",
+        "displaySymbol": false,
+        "unit": "у.е.",
+        "defaultValue": 100
+      },
+      {
+        "displayName": "Температура в змеевике",
+        "symbol": "T1",
+        "unit": "°C",
+        "desired": true,
+        "defaultValue": 0
+      },
+      {
+        "displayName": "Температура в рубашке",
+        "symbol": "T2",
+        "unit": "°C",
+        "desired": true,
+        "defaultValue": 0
+      }
+    ],
+    "restrictions": [
+      {
+        "displayName": "Сумма температур (T1+T2), °C <=",
+        "func": "T1+T2 <= value",
+        "value": 12
+      },
+      {
+        "displayName": "Температура в змеевике T1, °C >=",
+        "func": "T1 >= value",
+        "value": -2
+      },
+      {
+        "displayName": "Температура в змеевике T1, °C <=",
+        "func": "T1 <= value",
+        "value": 15
+      },
+      {
+        "displayName": "Температура в рубашке T2, °C >=",
+        "func": "T2 >= value",
+        "value": -2
+      },
+      {
+        "displayName": "Температура в рубашке T2, °C <=",
+        "func": "T2 <= value",
+        "value": 12
+      }
+    ]
+  },
+  {
+    "displayName": "11 Вариант",
+    "functionLatex": "V=\\alpha*(T_1-\\beta\\Delta p_1)\\cos(\\gamma\\Delta p_2 \\sqrt{(T_1^N+T_2^N)}",
+    "desiredParameterName": "Себестоимость фильтрата за рабочую смену",
+    "minmax": "min",
+    "function": "price*shift*a * (T1 - b* p1) *cos(y*p2 * sqrt(T1^ N + T2^N))",
+    "parameters": [
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "a",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "b",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "y",
+        "unit": "",
+        "defaultValue": 3.14
+      },
+      {
+        "displayName": "Количество  перегородок",
+        "symbol": "N",
+        "unit": "",
+        "defaultValue": 2
+      },
+      {
+        "displayName": "Величина перепада давления на первой перегородке",
+        "symbol": "p1",
+        "unit": "КПа",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Величина перепада давления на второй перегородке",
+        "symbol": "p2",
+        "unit": "КПа",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Стоимость 1 м^3 фильтрата",
+        "symbol": "price",
+        "displaySymbol": false,
+        "unit": "у.е.",
+        "defaultValue": 100
+      },
+      {
+        "displayName": "Рабочая смена",
+        "symbol": "shift",
+        "unit": "час",
+        "defaultValue": 8
+      },
+      {
+        "displayName": "Температура на первой перегородке",
+        "symbol": "T1",
+        "unit": "°C",
+        "desired": true,
+        "defaultValue": 7
+      },
+      {
+        "displayName": "Температура на второй перегородке",
+        "symbol": "T2",
+        "unit": "°C",
+        "desired": true,
+        "defaultValue": 7
+      }
+    ],
+    "restrictions": [
+      {
+        "displayName": "Разница температур, (T2-T1) °C  <=",
+        "func": "T2-T1 <= value",
+        "value": 3
+      },
+      {
+        "displayName": "Температура на первой перегородке T1, °C >=",
+        "func": "T1 >= value",
+        "value": -3
+      },
+      {
+        "displayName": "Температура на первой перегородке T1, °C <=",
+        "func": "T1 <= value",
+        "value": 0
+      },
+      {
+        "displayName": "Температура на второй перегородке T2, °C >=",
+        "func": "T2 >= value",
+        "value": -0.5
+      },
+      {
+        "displayName": "Температура на второй перегородке T2, °C <=",
+        "func": "T2 <= value",
+        "value": 3
+      }
+    ]
+  },
+  {
+    "displayName": "12 Вариант",
+    "functionLatex": "C= \\alpha (T_2- T_1)^{A_1} + \\beta * 1 /  V_1 * (T_1+T_2 -  \\gamma *V_2)^{A_2}",
+    "desiredParameterName": "Выход целевого компонента за рабочую смену",
+    "minmax": "max",
+    "function": "shift*a * (T2- T1)^A1 + b * 1 /  V1 * (T1+T2 -  y *V2)^A2",
+    "parameters": [
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "a",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "b",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "y",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Объемный расход",
+        "symbol": "A1",
+        "unit": "м^3/ч",
+        "defaultValue": 2
+      },
+      {
+        "displayName": "Объемный расход",
+        "symbol": "A2",
+        "unit": "м^3/ч",
+        "defaultValue": 2
+      },
+      {
+        "displayName": "Рабочий объем реактора",
+        "symbol": "V1",
+        "unit": "м^3",
+        "defaultValue": 9
+      },
+      {
+        "displayName": "Рабочий объем реактора",
+        "symbol": "V2",
+        "unit": "м^3",
+        "defaultValue": 10
+      },
+      {
+        "displayName": "Рабочая смена",
+        "symbol": "shift",
+        "unit": "час",
+        "defaultValue": 8
+      },
+      {
+        "displayName": "Температура во первом реакторе",
+        "symbol": "T1",
+        "unit": "°C",
+        "desired": true,
+        "defaultValue": 7
+      },
+      {
+        "displayName": "Температура во втором реакторе",
+        "symbol": "T2",
+        "unit": "°C",
+        "desired": true,
+        "defaultValue": 7
+      }
+    ],
+    "restrictions": [
+      {
+        "displayName": "T1+T2 , °C  <=",
+        "func": "T1 +T2 <= value",
+        "value": 12
+      },
+      {
+        "displayName": "Температура в первом реакторе T1, °C >=",
+        "func": "T1 >= value",
+        "value": -3
+      },
+      {
+        "displayName": "Температура в первом реакторе T1, °C <=",
+        "func": "T1 <= value",
+        "value": 14
+      },
+      {
+        "displayName": "Температура в втором реакторе T2, °C >=",
+        "func": "T2 >= value",
+        "value": -3
+      },
+      {
+        "displayName": "Температура в втором реакторе T2, °C <=",
+        "func": "T2 <= value",
+        "value": 14
+      }
+    ]
+  },
+  {
+    "displayName": "13 Вариант",
+    "functionLatex": "C = \\alpha (G\\mu((T_2- T_1)^V+(\\beta *A-T_1)^V))",
+    "desiredParameterName": "Затраты на очистку реакционной массы",
+    "minmax": "min",
+    "function": "price* a*(G*u*((T2- T1)^V+(b *A-T1)^V))",
+    "parameters": [
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "a",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "b",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "u",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Количество  реакционной массы в реакторе",
+        "symbol": "G",
+        "unit": "т",
+        "defaultValue": 2
+      },
+      {
+        "displayName": "Давление в реакторе",
+        "symbol": "A",
+        "unit": "КПа",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Рабочий объем реактора",
+        "symbol": "V",
+        "unit": "м^3",
+        "defaultValue": 2
+      },
+      {
+        "displayName": "Затраты на очистку 1 кг",
+        "symbol": "price",
+        "displaySymbol": false,
+        "unit": "у.е.",
+        "defaultValue": 100
+      },
+      {
+        "displayName": "Температура в первом реакторе",
+        "symbol": "T1",
+        "unit": "°C",
+        "desired": true,
+        "defaultValue": 7
+      },
+      {
+        "displayName": "Температура во втором реакторе",
+        "symbol": "T2",
+        "unit": "°C",
+        "desired": true,
+        "defaultValue": 7
+      }
+    ],
+    "restrictions": [
+      {
+        "displayName": "T1+T2 , °C  >=",
+        "func": " T1 +T2 >= value",
+        "value": 1
+      },
+      {
+        "displayName": "Температура в первом реакторе T1, °C >=",
+        "func": "T1 >= value",
+        "value": -3
+      },
+      {
+        "displayName": "Температура в первом реакторе T1, °C <=",
+        "func": "T1 <= value",
+        "value": 3
+      },
+      {
+        "displayName": "Температура в втором реакторе T2, °C >=",
+        "func": "T2 >= value",
+        "value": -3
+      },
+      {
+        "displayName": "Температура в втором реакторе T2, °C <=",
+        "func": "T2 <= value",
+        "value": 6
+      }
+    ]
+  },
+  {
+    "displayName": "14 Вариант",
+    "functionLatex": "C =\\alpha(A_1^2+\\beta A_2 - \\mu V_{1})^{N}+\\alpha(\\beta_1\\alpha_1 +\\alpha_2^2-\\mu_1V_2)^N",
+    "desiredParameterName": "Выход целевого компонента за смену",
+    "minmax": "max",
+    "function": "shift*a*( A1^2 +b* A2 - u*V1)^ N + A1*(b1*A1 + A2^2 - u1*V2)^N",
+    "parameters": [
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "a",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "a1",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "b",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "b1",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "u",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "u1",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Количество  реакторов",
+        "symbol": "N",
+        "unit": "",
+        "defaultValue": 2
+      },
+      {
+        "displayName": "Рабочий объем реактора",
+        "symbol": "V1",
+        "unit": "м^3",
+        "defaultValue": 11
+      },
+      {
+        "displayName": "Рабочий объем реактора",
+        "symbol": "V2",
+        "unit": "м^3",
+        "defaultValue": 7
+      },
+      {
+        "displayName": "Рабочая смена",
+        "symbol": "shift",
+        "unit": "час",
+        "defaultValue": 8
+      },
+      {
+        "displayName": "Объемный расход",
+        "symbol": "A1",
+        "unit": "м^3",
+        "desired": true,
+        "defaultValue": 7
+      },
+      {
+        "displayName": "Объемный расход",
+        "symbol": "A2",
+        "unit": "м^3",
+        "desired": true,
+        "defaultValue": 7
+      }
+    ],
+    "restrictions": [
+      {
+        "displayName": "Суммарная производительность, м^3 /час  <=",
+        "func": "A1+A2 <= value",
+        "value": 5
+      },
+      {
+        "displayName": "Объемный расход сырьевого компонента A1, м^3 /час >=",
+        "func": "A1 >= value",
+        "value": 1
+      },
+      {
+        "displayName": "Объемный расход сырьевого компонента A1, м^3 /час <=",
+        "func": "A1 <= value",
+        "value": 10
+      },
+      {
+        "displayName": "Объемный расход сырьевого компонента A2, м^3 /час >=",
+        "func": "A2 >= value",
+        "value": 1
+      },
+      {
+        "displayName": "Объемный расход сырьевого компонента A2, м^3 /час <=",
+        "func": "A2 <= value",
+        "value": 10
+      }
+    ]
+  },
+  {
+    "displayName": "15 Вариант",
+    "functionLatex": "V=\\alpha*(T_1-\\beta\\Delta p_1)\\cos(\\gamma\\Delta p_2 \\sqrt{(T_1^N+T_2^N)}",
+    "desiredParameterName": "Выход целевого компонента за смену",
+    "minmax": "max",
+    "function": "shift*a * (T1 - b* p1) *cos(y*p2 * sqrt(T1^ N + T2^N))",
+    "parameters": [
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "a",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "b",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "y",
+        "unit": "",
+        "defaultValue": 3.14
+      },
+      {
+        "displayName": "Количество  перегородок",
+        "symbol": "N",
+        "unit": "",
+        "defaultValue": 2
+      },
+      {
+        "displayName": "Величина перепада давления на первой перегородке",
+        "symbol": "p1",
+        "unit": "КПа",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Величина перепада давления на второй перегородке",
+        "symbol": "p2",
+        "unit": "КПа",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Рабочая смена",
+        "symbol": "shift",
+        "unit": "час",
+        "defaultValue": 8
+      },
+      {
+        "displayName": "Температура на первой перегородке",
+        "symbol": "T1",
+        "unit": "°C",
+        "desired": true,
+        "defaultValue": 7
+      },
+      {
+        "displayName": "Температура на второй перегородке",
+        "symbol": "T2",
+        "unit": "°C",
+        "desired": true,
+        "defaultValue": 7
+      }
+    ],
+    "restrictions": [
+      {
+        "displayName": "Разница температур, (T2-T1) °C  >=",
+        "func": "T2-T1 >= value",
+        "value": 2
+      },
+      {
+        "displayName": "Температура на первой перегородке T1, °C >=",
+        "func": "T1 >= value",
+        "value": -3
+      },
+      {
+        "displayName": "Температура на первой перегородке T1, °C <=",
+        "func": "T1 <= value",
+        "value": 0
+      },
+      {
+        "displayName": "Температура на второй перегородке T2, °C >=",
+        "func": "T2 >= value",
+        "value": -0.5
+      },
+      {
+        "displayName": "Температура на второй перегородке T2, °C <=",
+        "func": "T2 <= value",
+        "value": 3
+      }
+    ]
+  },
+  {
+    "displayName": "16 Вариант",
+    "functionLatex": "P = \\alpha  * (L - S)^2 + \\beta  * 1 / H * (S+ L -  \\gamma  *N)^2",
+    "desiredParameterName": "Затраты на изготовление изделия",
+    "minmax": "min",
+    "function": "price*a*(L-S)^2 + b*1/H*(S+L-u*N)^2",
+    "parameters": [
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "a",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "b",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "u",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Высота теплообменника",
+        "symbol": "H",
+        "unit": "м",
+        "defaultValue": 9
+      },
+      {
+        "displayName": "Число витков змеевика",
+        "symbol": "N",
+        "unit": "",
+        "defaultValue": 10
+      },
+      {
+        "displayName": "Стоимость производства 1 кг",
+        "symbol": "price",
+        "displaySymbol": false,
+        "unit": "у.е.",
+        "defaultValue": 100
+      },
+      {
+        "displayName": "Длина теплообменного устройства",
+        "symbol": "L",
+        "unit": "м",
+        "desired": true,
+        "defaultValue": 0
+      },
+      {
+        "displayName": "Ширина теплообменного устройства",
+        "symbol": "S",
+        "unit": "м",
+        "desired": true,
+        "defaultValue": 0
+      }
+    ],
+    "restrictions": [
+      {
+        "displayName": "Сумма длины и ширины (L+S), м >=",
+        "func": "L+S >= value",
+        "value": 11
+      },
+      {
+        "displayName": "Длина теплообменного устройства, м >=",
+        "func": "L >= value",
+        "value": 1
+      },
+      {
+        "displayName": "Длина теплообменного устройства, м <=",
+        "func": "L <= value",
+        "value": 15
+      },
+      {
+        "displayName": "Ширина теплообменного устройства, м >=",
+        "func": "S >= value",
+        "value": 1
+      },
+      {
+        "displayName": "Ширина теплообменного устройства, м<=",
+        "func": "S <= value",
+        "value": 12
+      }
+    ]
+  },
+  {
+    "displayName": "17 Вариант",
+    "functionLatex": "S=\\alpha*G*( (T_2- \\beta* A)^N +  u *{e^{(T_1+T_2)}}^{N} +\\Delta *( T_2- T_1))",
+    "desiredParameterName": "Себестоимость целевого компонента",
+    "minmax": "min",
+    "function": "price*a*G*( (T2- b* A)^N +  u *exp(T1+T2) ^N +delta *( T2- T1))",
+    "parameters": [
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "a",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "b",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "u",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "delta",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Расход реакционной массы",
+        "symbol": "G",
+        "unit": "кг/ч",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Давление в реакторе",
+        "symbol": "A",
+        "unit": "КПа",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Количество теплообменных устройств",
+        "symbol": "N",
+        "unit": "",
+        "defaultValue": 2
+      },
+      {
+        "displayName": "Стоимость производства 1 кг",
+        "symbol": "price",
+        "displaySymbol": false,
+        "unit": "у.е.",
+        "defaultValue": 1000
+      },
+      {
+        "displayName": "Температура в змеевике",
+        "symbol": "T1",
+        "unit": "°C",
+        "desired": true,
+        "defaultValue": 0
+      },
+      {
+        "displayName": "Температура в диффузоре",
+        "symbol": "T2",
+        "unit": "°C",
+        "desired": true,
+        "defaultValue": 0
+      }
+    ],
+    "restrictions": [
+      {
+        "displayName": "Разница температур (T2-T1), °C >=",
+        "func": "T2-T1 >= value",
+        "value": 1
+      },
+      {
+        "displayName": "Температура в змеевике T1, °C >=",
+        "func": "T1 >= value",
+        "value": -18
+      },
+      {
+        "displayName": "Температура в змеевике T1, °C <=",
+        "func": "T1 <= value",
+        "value": 7
+      },
+      {
+        "displayName": "Температура в диффузоре T2, °C >=",
+        "func": "T2 >= value",
+        "value": -8
+      },
+      {
+        "displayName": "Температура в диффузоре T2, °C <=",
+        "func": "T2 <= value",
+        "value": 8
+      }
+    ]
+  },
+  {
+    "displayName": "18 Вариант",
+    "functionLatex": "S =\\alpha(G\\mu((T_2-T_1)^N+(\\beta A-T_1)^N))",
+    "desiredParameterName": "Себестоимость целевого компонента",
+    "minmax": "min",
+    "function": "price*a*(G* u *((T2- T1)^N +(b *A-T1)^N))",
+    "parameters": [
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "a",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "b",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "u",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Расход реакционной массы",
+        "symbol": "G",
+        "unit": "кг/ч",
+        "defaultValue": 2
+      },
+      {
+        "displayName": "Давление в реакторе",
+        "symbol": "A",
+        "unit": "КПа",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Скорость вращения мешалки",
+        "symbol": "N",
+        "unit": "об/c",
+        "defaultValue": 2
+      },
+      {
+        "displayName": "Стоимость производства 1 кг",
+        "symbol": "price",
+        "displaySymbol": false,
+        "unit": "у.е.",
+        "defaultValue": 600
+      },
+      {
+        "displayName": "Температура в змеевике",
+        "symbol": "T1",
+        "unit": "°C",
+        "desired": true,
+        "defaultValue": 0
+      },
+      {
+        "displayName": "Температура в рубашке",
+        "symbol": "T2",
+        "unit": "°C",
+        "desired": true,
+        "defaultValue": 0
+      }
+    ],
+    "restrictions": [
+      {
+        "displayName": "T1+0.5*T2, °C <=",
+        "func": "T1+0.5*T2 <= value",
+        "value": 1.5
+      },
+      {
+        "displayName": "Температура в змеевике T1, °C >=",
+        "func": "T1 >= value",
+        "value": -3
+      },
+      {
+        "displayName": "Температура в змеевике T1, °C <=",
+        "func": "T1 <= value",
+        "value": 3
+      },
+      {
+        "displayName": "Температура в рубашке T2, °C >=",
+        "func": "T2 >= value",
+        "value": -2
+      },
+      {
+        "displayName": "Температура в рубашке T2, °C <=",
+        "func": "T2 <= value",
+        "value": 6
+      }
+    ]
+  },
+  {
+    "displayName": "19 Вариант",
+    "functionLatex": "C =\\alpha(A_1^2+\\beta A_2 - \\mu V_{1})^{N}+\\alpha(\\beta_1\\alpha_1 +\\alpha_2^2-\\mu_1V_2)^N",
+    "desiredParameterName": "Себестоимость целевого компонента за рабочую смену",
+    "minmax": "min",
+    "function": "price*shift*a*( A1^2 +b* A2 - u*V1)^ N + A1*(b1*A1 + A2^2 - u1*V2)^N",
+    "parameters": [
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "a",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "a1",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "b",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "b1",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "u",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "u1",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Количество  реакторов",
+        "symbol": "N",
+        "unit": "",
+        "defaultValue": 2
+      },
+      {
+        "displayName": "Рабочий объем реактора",
+        "symbol": "V1",
+        "unit": "м^3",
+        "defaultValue": 11
+      },
+      {
+        "displayName": "Рабочий объем реактора",
+        "symbol": "V2",
+        "unit": "м^3",
+        "defaultValue": 7
+      },
+      {
+        "displayName": "Стоимость производства 1 кг",
+        "symbol": "price",
+        "displaySymbol": false,
+        "unit": "у.е.",
+        "defaultValue": 1500
+      },
+      {
+        "displayName": "Рабочая смена",
+        "symbol": "shift",
+        "unit": "час",
+        "defaultValue": 8
+      },
+      {
+        "displayName": "Объемный расход",
+        "symbol": "A1",
+        "unit": "м^3",
+        "desired": true,
+        "defaultValue": 7
+      },
+      {
+        "displayName": "Объемный расход",
+        "symbol": "A2",
+        "unit": "м^3",
+        "desired": true,
+        "defaultValue": 7
+      }
+    ],
+    "restrictions": [
+      {
+        "displayName": "(4*A1 +5*A2), м^3 /час  <=",
+        "func": "4*A1 +5*A2 <= value",
+        "value": 18
+      },
+      {
+        "displayName": "Объемный расход сырьевого компонента A1, м^3 /час >=",
+        "func": "A1 >= value",
+        "value": 1
+      },
+      {
+        "displayName": "Объемный расход сырьевого компонента A1, м^3 /час <=",
+        "func": "A1 <= value",
+        "value": 10
+      },
+      {
+        "displayName": "Объемный расход сырьевого компонента A2, м^3 /час >=",
+        "func": "A2 >= value",
+        "value": 1
+      },
+      {
+        "displayName": "Объемный расход сырьевого компонента A2, м^3 /час <=",
+        "func": "A2 <= value",
+        "value": 10
+      }
+    ]
+  },
+  {
+    "displayName": "20 Вариант",
+    "functionLatex": "V = \\alpha G(T_1^2+\\beta T_2-\\mu \\Delta p_1)^N+\\gamma (\\beta _1 T_1+T_2^2-\\mu_1 \\Delta p_2)^N",
+    "desiredParameterName": "Себестоимость фильтрата за рабочую смену",
+    "minmax": "min",
+    "function": "price*shift*a* G* (T1^2 +b *T2 - u *p1  )^N +  y *(b1*T1 + T2^2 - u1*p2 )^N",
+    "parameters": [
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "a",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "b",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "u",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "y",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "b1",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "u1",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Количество  перегородок",
+        "symbol": "N",
+        "unit": "",
+        "defaultValue": 2
+      },
+      {
+        "displayName": "Общий  расход  фильтрующей жидкости",
+        "symbol": "G",
+        "unit": "кг/ч",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Величина перепада давления на первой перегородке",
+        "symbol": "p1",
+        "unit": "КПа",
+        "defaultValue": 11
+      },
+      {
+        "displayName": "Величина перепада давления на второй перегородке",
+        "symbol": "p2",
+        "unit": "КПа",
+        "defaultValue": 7
+      },
+      {
+        "displayName": "Стоимость 1 м^3 фильтрата",
+        "symbol": "price",
+        "displaySymbol": false,
+        "unit": "у.е.",
+        "defaultValue": 200
+      },
+      {
+        "displayName": "Рабочая смена",
+        "symbol": "shift",
+        "unit": "час",
+        "defaultValue": 20
+      },
+      {
+        "displayName": "Температура на первой перегородке",
+        "symbol": "T1",
+        "unit": "°C",
+        "desired": true,
+        "defaultValue": 7
+      },
+      {
+        "displayName": "Температура на второй перегородке",
+        "symbol": "T2",
+        "unit": "°C",
+        "desired": true,
+        "defaultValue": 7
+      }
+    ],
+    "restrictions": [
+      {
+        "displayName": "Условие (0.5*T1+T2)<=",
+        "func": "0.5*T1+T2 <= value",
+        "value": 1.5
+      },
+      {
+        "displayName": "Температура на первой перегородке T1, °C >=",
+        "func": "T1 >= value",
+        "value": -5
+      },
+      {
+        "displayName": "Температура на первой перегородке T1, °C <=",
+        "func": "T1 <= value",
+        "value": 0
+      },
+      {
+        "displayName": "Температура на второй перегородке T2, °C >=",
+        "func": "T2 >= value",
+        "value": -1
+      },
+      {
+        "displayName": "Температура на второй перегородке T2, °C <=",
+        "func": "T2 <= value",
+        "value": 5
+      }
+    ]
+  },
+  {
+    "displayName": "21 Вариант",
+    "functionLatex": "S=\\alpha*G*( (T_2- \\beta* A)^N +  u *{e^{(T_1+T_2)}}^{N} +\\Delta *( T_2- T_1))",
+    "desiredParameterName": "Прибыль от  реализации целевого компонента",
+    "minmax": "max",
+    "function": "price*a*G*( (T2- b* A)^N +  u *exp(T1+T2) ^N +delta *( T2- T1))",
+    "parameters": [
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "a",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "b",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "u",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "delta",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Расход реакционной массы",
+        "symbol": "G",
+        "unit": "кг/ч",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Давление в реакторе",
+        "symbol": "A",
+        "unit": "КПа",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Количество теплообменных устройств",
+        "symbol": "N",
+        "unit": "",
+        "defaultValue": 2
+      },
+      {
+        "displayName": "Прибыль от реализации 1 кг",
+        "symbol": "price",
+        "displaySymbol": false,
+        "unit": "у.е.",
+        "defaultValue": 200
+      },
+      {
+        "displayName": "Температура в змеевике",
+        "symbol": "T1",
+        "unit": "°C",
+        "desired": true,
+        "defaultValue": 0
+      },
+      {
+        "displayName": "Температура в диффузоре",
+        "symbol": "T2",
+        "unit": "°C",
+        "desired": true,
+        "defaultValue": 0
+      }
+    ],
+    "restrictions": [
+      {
+        "displayName": "T1+T2, °C <=",
+        "func": "T1+T2 <= value",
+        "value": 3
+      },
+      {
+        "displayName": "Температура в змеевике T1, °C >=",
+        "func": "T1 >= value",
+        "value": -18
+      },
+      {
+        "displayName": "Температура в змеевике T1, °C <=",
+        "func": "T1 <= value",
+        "value": 7
+      },
+      {
+        "displayName": "Температура в диффузоре T2, °C >=",
+        "func": "T2 >= value",
+        "value": -8
+      },
+      {
+        "displayName": "Температура в диффузоре T2, °C <=",
+        "func": "T2 <= value",
+        "value": 8
+      }
+    ]
+  },
+  {
+    "displayName": "22 Вариант",
+    "functionLatex": "S =\\alpha(G\\mu((T_2-T_1)^N+(\\beta A-T_1)^N))",
+    "desiredParameterName": "Прибыль от реализации целевого компонента",
+    "minmax": "max",
+    "function": "price*a*(G* u *((T2- T1)^N +(b *A-T1)^N))",
+    "parameters": [
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "a",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "b",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "u",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Расход реакционной массы",
+        "symbol": "G",
+        "unit": "кг/ч",
+        "defaultValue": 2
+      },
+      {
+        "displayName": "Давление в реакторе",
+        "symbol": "A",
+        "unit": "КПа",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Скорость вращения мешалки",
+        "symbol": "N",
+        "unit": "об/c",
+        "defaultValue": 2
+      },
+      {
+        "displayName": "Прибыль от реализации 1 кг",
+        "symbol": "price",
+        "displaySymbol": false,
+        "unit": "у.е.",
+        "defaultValue": 400
+      },
+      {
+        "displayName": "Температура в змеевике",
+        "symbol": "T1",
+        "unit": "°C",
+        "desired": true,
+        "defaultValue": 0
+      },
+      {
+        "displayName": "Температура в рубашке",
+        "symbol": "T2",
+        "unit": "°C",
+        "desired": true,
+        "defaultValue": 0
+      }
+    ],
+    "restrictions": [
+      {
+        "displayName": "T1- T2, °C >=",
+        "func": "T1- T2 >= value",
+        "value": -2
+      },
+      {
+        "displayName": "Температура в змеевике T1, °C >=",
+        "func": "T1 >= value",
+        "value": -3
+      },
+      {
+        "displayName": "Температура в змеевике T1, °C <=",
+        "func": "T1 <= value",
+        "value": 3
+      },
+      {
+        "displayName": "Температура в рубашке T2, °C >=",
+        "func": "T2 >= value",
+        "value": -2
+      },
+      {
+        "displayName": "Температура в рубашке T2, °C <=",
+        "func": "T2 <= value",
+        "value": 6
+      }
+    ]
+  },
+  {
+    "displayName": "23 Вариант",
+    "functionLatex": "P= \\alpha G ((T_1 - T_2)^2 + \\beta * 1 / H * (T_1+ T_2 - \\gamma N)^2)",
+    "desiredParameterName": "Прибыль от реализации целевого компонента",
+    "minmax": "max",
+    "function": "price*a *G*( (T1 - T2)^2 + b * 1 / H * (T1+ T2 -  y *N)^2)",
+    "parameters": [
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "a",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "b",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "y",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Количество  реакционной массы",
+        "symbol": "G",
+        "unit": "кг/ч",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Давление в реакторе",
+        "symbol": "H",
+        "unit": "КПа",
+        "defaultValue": 9
+      },
+      {
+        "displayName": "Скорость вращения мешалки",
+        "symbol": "N",
+        "unit": "об/c",
+        "defaultValue": 10
+      },
+      {
+        "displayName": "Прибыль от реализации 1 кг",
+        "symbol": "price",
+        "displaySymbol": false,
+        "unit": "у.е.",
+        "defaultValue": 1500
+      },
+      {
+        "displayName": "Температура в змеевике",
+        "symbol": "T1",
+        "unit": "°C",
+        "desired": true,
+        "defaultValue": 0
+      },
+      {
+        "displayName": "Температура в рубашке",
+        "symbol": "T2",
+        "unit": "°C",
+        "desired": true,
+        "defaultValue": 0
+      }
+    ],
+    "restrictions": [
+      {
+        "displayName": "Сумма температур (T1+T2), °C <=",
+        "func": "T1+T2 <= value",
+        "value": 10
+      },
+      {
+        "displayName": "Температура в змеевике T1, °C >=",
+        "func": "T1 >= value",
+        "value": -2
+      },
+      {
+        "displayName": "Температура в змеевике T1, °C <=",
+        "func": "T1 <= value",
+        "value": 15
+      },
+      {
+        "displayName": "Температура в рубашке T2, °C >=",
+        "func": "T2 >= value",
+        "value": -2
+      },
+      {
+        "displayName": "Температура в рубашке T2, °C <=",
+        "func": "T2 <= value",
+        "value": 12
+      }
+    ]
+  },
+  {
+    "displayName": "24 Вариант",
+    "functionLatex": "V=\\alpha*(T_1-\\beta\\Delta p_1)\\cos(\\gamma\\Delta p_2 \\sqrt{(T_1^N+T_2^N)}",
+    "desiredParameterName": "Затраты на производство фильтрата за рабочую неделю",
+    "minmax": "min",
+    "function": "price*shift*a * (T1 - b* p1) *cos(y*p2 * sqrt(T1^ N + T2^N))",
+    "parameters": [
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "a",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "b",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "y",
+        "unit": "",
+        "defaultValue": 3.14
+      },
+      {
+        "displayName": "Количество  перегородок",
+        "symbol": "N",
+        "unit": "",
+        "defaultValue": 2
+      },
+      {
+        "displayName": "Величина перепада давления на первой перегородке",
+        "symbol": "p1",
+        "unit": "КПа",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Величина перепада давления на второй перегородке",
+        "symbol": "p2",
+        "unit": "КПа",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Стоимость производства 1 м^3 фильтрата",
+        "symbol": "price",
+        "displaySymbol": false,
+        "unit": "у.е.",
+        "defaultValue": 200
+      },
+      {
+        "displayName": "Рабочая неделя",
+        "symbol": "shift",
+        "unit": "час",
+        "defaultValue": 40
+      },
+      {
+        "displayName": "Температура на первой перегородке",
+        "symbol": "T1",
+        "unit": "°C",
+        "desired": true,
+        "defaultValue": 7
+      },
+      {
+        "displayName": "Температура на второй перегородке",
+        "symbol": "T2",
+        "unit": "°C",
+        "desired": true,
+        "defaultValue": 7
+      }
+    ],
+    "restrictions": [
+      {
+        "displayName": "Разница температур, (T2-T1) °C  <=",
+        "func": "T2-T1 <= value",
+        "value": 2
+      },
+      {
+        "displayName": "Температура на первой перегородке T1, °C >=",
+        "func": "T1 >= value",
+        "value": -3
+      },
+      {
+        "displayName": "Температура на первой перегородке T1, °C <=",
+        "func": "T1 <= value",
+        "value": 0
+      },
+      {
+        "displayName": "Температура на второй перегородке T2, °C >=",
+        "func": "T2 >= value",
+        "value": -0.5
+      },
+      {
+        "displayName": "Температура на второй перегородке T2, °C <=",
+        "func": "T2 <= value",
+        "value": 3
+      }
+    ]
+  },
+  {
+    "displayName": "25 Вариант",
+    "functionLatex": "C= \\alpha (T_2- T_1)^{A_1} + \\beta * 1 /  V_1 * (T_1+T_2 -  \\gamma *V_2)^{A_2}",
+    "desiredParameterName": "Выход целевого компонента за рабочую неделю",
+    "minmax": "max",
+    "function": "shift*a * (T2- T1)^A1 + b * 1 /  V1 * (T1+T2 -  y *V2)^A2",
+    "parameters": [
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "a",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "b",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "y",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Количество  перегородок",
+        "symbol": "N",
+        "unit": "",
+        "defaultValue": 2
+      },
+      {
+        "displayName": "Объемный расход",
+        "symbol": "A1",
+        "unit": "м^3/ч",
+        "defaultValue": 2
+      },
+      {
+        "displayName": "Объемный расход",
+        "symbol": "A2",
+        "unit": "м^3/ч",
+        "defaultValue": 2
+      },
+      {
+        "displayName": "Рабочий объем реактора",
+        "symbol": "V1",
+        "unit": "м^3",
+        "defaultValue": 9
+      },
+      {
+        "displayName": "Рабочий объем реактора",
+        "symbol": "V2",
+        "unit": "м^3",
+        "defaultValue": 10
+      },
+      {
+        "displayName": "Температура во первом реакторе",
+        "symbol": "T1",
+        "unit": "°C",
+        "desired": true,
+        "defaultValue": 7
+      },
+      {
+        "displayName": "Температура во втором реакторе",
+        "symbol": "T2",
+        "unit": "°C",
+        "desired": true,
+        "defaultValue": 7
+      }
+    ],
+    "restrictions": [
+      {
+        "displayName": "T1+T2 , °C  <=",
+        "func": " T1 +T2 <= value",
+        "value": 10
+      },
+      {
+        "displayName": "Температура в первом реакторе T1, °C >=",
+        "func": "T1 >= value",
+        "value": -3
+      },
+      {
+        "displayName": "Температура в первом реакторе T1, °C <=",
+        "func": "T1 <= value",
+        "value": 14
+      },
+      {
+        "displayName": "Температура в втором реакторе T2, °C >=",
+        "func": "T2 >= value",
+        "value": -3
+      },
+      {
+        "displayName": "Температура в втором реакторе T2, °C <=",
+        "func": "T2 <= value",
+        "value": 14
+      }
+    ]
+  },
+  {
+    "displayName": "26 Вариант",
+    "functionLatex": "C = \\alpha (G\\mu((T_2- T_1)^V+(\\beta *A-T_1)^V))",
+    "desiredParameterName": "Затраты на очистку реакционной массы",
+    "minmax": "min",
+    "function": "price*a*(G*u*((T2- T1)^V+(b *A-T1)^V))",
+    "parameters": [
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "a",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "b",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "u",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Рабочий объем реактора",
+        "symbol": "V",
+        "unit": "м^3",
+        "defaultValue": 2
+      },
+      {
+        "displayName": "Количество  реакционной массы в реакторе",
+        "symbol": "G",
+        "unit": "т",
+        "defaultValue": 2
+      },
+      {
+        "displayName": "Давление в реакторе",
+        "symbol": "A",
+        "unit": "КПа",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Затраты на очистку 1 кг массы",
+        "symbol": "price",
+        "displaySymbol": false,
+        "unit": "у.е.",
+        "defaultValue": 1500
+      },
+      {
+        "displayName": "Температура в первом реакторе",
+        "symbol": "T1",
+        "unit": "°C",
+        "desired": true,
+        "defaultValue": 7
+      },
+      {
+        "displayName": "Температура во втором реакторе",
+        "symbol": "T2",
+        "unit": "°C",
+        "desired": true,
+        "defaultValue": 7
+      }
+    ],
+    "restrictions": [
+      {
+        "displayName": "T2-T1 , °C  >=",
+        "func": "T2-T1 >= value",
+        "value": 2
+      },
+      {
+        "displayName": "Температура в первом реакторе T1, °C >=",
+        "func": "T1 >= value",
+        "value": -3
+      },
+      {
+        "displayName": "Температура в первом реакторе T1, °C <=",
+        "func": "T1 <= value",
+        "value": 3
+      },
+      {
+        "displayName": "Температура в втором реакторе T2, °C >=",
+        "func": "T2 >= value",
+        "value": -3
+      },
+      {
+        "displayName": "Температура в втором реакторе T2, °C <=",
+        "func": "T2 <= value",
+        "value": 6
       }
     ]
   }

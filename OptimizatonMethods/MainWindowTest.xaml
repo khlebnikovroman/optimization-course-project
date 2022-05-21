@@ -38,14 +38,17 @@
                 <RowDefinition />
                 <RowDefinition Height="50" />
             </Grid.RowDefinitions>
-            <StackPanel Grid.Column="0">
 
-                <controls:FormulaControl Scale="25" Margin="10"
-                                         Formula="P = \alpha  * (L - S)^2 + \beta  * 1 / H * (S+ L -  \gamma  *N)^2" />
-                <ComboBox ItemsSource="{Binding variants}" DisplayMemberPath="Key" SelectedItem="{Binding SelectedVariant}"/>
-                <ListBox ItemsSource="{Binding mathModel.parameters}">
+            <hc:ScrollViewer Orientation="Vertical" VerticalScrollBarVisibility="Auto"
+                             IsInertiaEnabled="True">
+                    <StackPanel>
+                    <controls:FormulaControl Scale="25" Margin="10"
+                                             Formula="{Binding mathModel.Latex}" />
+                    <ComboBox ItemsSource="{Binding variants}" DisplayMemberPath="Key" SelectedItem="{Binding SelectedVariant}"/>
+                    <ListBox ItemsSource="{Binding mathModel.parameters}">
                     <ListBox.ItemContainerStyle>
                         <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource ListBoxItemBaseStyle}">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding display}" Value="False">
                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -75,8 +78,18 @@
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
-                <GroupBox Header="Ограничения" Style="{StaticResource GroupBoxTab}">
+                    <GroupBox Header="Ограничения" Style="{StaticResource GroupBoxTab}">
                     <ListBox ItemsSource="{Binding mathModel.restrictions}">
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource ListBoxItemBaseStyle}">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding display}" Value="False">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <Grid>
@@ -101,8 +114,9 @@
                     </ListBox>
 
                 </GroupBox>
-
-            </StackPanel>
+                    </StackPanel>
+            </hc:ScrollViewer>
+            
             <Button Grid.Row="1" Margin="5" Command="{Binding CalculateCommand}">Рассчитать</Button>
         </Grid>
 

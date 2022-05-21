@@ -138,9 +138,9 @@ namespace OptimizatonMethods
             c.setColorAxis(620, 250, Chart.Left, 200, Chart.Right);
 
             // Set the x, y and z axis titles using 12 pt Arial Bold font
-            c.xAxis().setTitle("X Title<*br*>Placeholder", "Arial Bold", 12);
-            c.yAxis().setTitle("Y Title<*br*>Placeholder", "Arial Bold", 12);
-            c.zAxis().setTitle("Z Title Placeholder", "Arial Bold", 12);
+            c.xAxis().setTitle(mathModel.p1.parameter.ToString(), "Arial Bold", 12);
+            c.yAxis().setTitle(mathModel.p2.parameter.ToString(), "Arial Bold", 12);
+            c.zAxis().setTitle(mathModel.desiredParameterName, "Arial Bold", 12);
 
             // Output the chart
             viewer.Chart = c;

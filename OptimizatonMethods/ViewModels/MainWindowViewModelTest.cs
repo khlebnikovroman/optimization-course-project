@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -109,9 +110,27 @@ namespace OptimizatonMethods.ViewModels
                         temp.Add(item.Z);
                     }
 
-                    MessageBox.Show($"Минимальная себестоимость, у.е.: {temp.Min()}\n " +
-                                    $"Длина:, м: {points3D.Find(x => x.Z == temp.Min()).X}\n " +
-                                    $"Ширина, С: {points3D.Find(x => x.Z == temp.Min()).Y}");
+                    double x = 0;
+                    double y = 0;
+                    double z = 0;
+
+                    if (mathModel.minMax == MathModelTest.MinMax.Max)
+                    {
+                        z = temp.Max();
+                        x = points3D.Find(x => x.Z == z).X;
+                        y = points3D.Find(x => x.Z == z).Y;
+                    }
+                    else if (mathModel.minMax == MathModelTest.MinMax.Min)
+                    {
+                        z = temp.Min();
+                        x = points3D.Find(x => x.Z == z).X;
+                        y = points3D.Find(x => x.Z == z).Y;
+                    }
+
+                    
+                    HandyControl.Controls.MessageBox.Show($"{mathModel.desiredParameterName}: {z}\n " +
+                                    $"{mathModel.p1.parameter.ToString()}: {x}\n " +
+                                    $"{mathModel.p2.parameter.ToString()}: {y}", "Ответ", MessageBoxButton.OK, MessageBoxImage.Information);
                 });
             }
         }

@@ -10,6 +10,7 @@
   <ItemGroup>
     <PackageReference Include="ChartDirector.Net.Desktop.Controls" Version="7.0.0" />
     <PackageReference Include="HandyControl" Version="3.3.0" />
+    <PackageReference Include="HandyControl.Lang.ru" Version="3.3.0" />
     <PackageReference Include="org.matheval" Version="1.0.0.2" />
     <PackageReference Include="PropertyChanged.Fody" Version="3.4.0" />
     <PackageReference Include="WpfMath" Version="0.11.0" />

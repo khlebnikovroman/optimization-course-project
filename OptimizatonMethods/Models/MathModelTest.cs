@@ -197,6 +197,14 @@ namespace OptimizatonMethods.Models
     [AddINotifyPropertyChangedInterface]
     public class MathModelTest
     {
+        public enum MinMax
+        {
+            Min,
+            Max,
+        }
+        public string desiredParameterName { get; set; }
+        public string Latex { get; set; }
+        public MinMax minMax;
         public ParameterWithBounds p1
         {
             get
@@ -213,6 +221,7 @@ namespace OptimizatonMethods.Models
         }
         public Parameters parameters { get; set; } = new Parameters();
         private double _step;
+        
         public Restrictions restrictions { get; set; } = new Restrictions();
         public Expression funcExpression;
         private ParameterWithBounds[] desiredParameters  = new ParameterWithBounds[2] ; //только два параметра можем вычислять
@@ -220,6 +229,7 @@ namespace OptimizatonMethods.Models
         private void rebind()
         {
             restrictions.Bind();
+            var f = funcExpression.getVariables();
             foreach (var variable in funcExpression.getVariables())
             {
                 funcExpression.Bind(variable, parameters[variable].Value);
@@ -243,6 +253,18 @@ namespace OptimizatonMethods.Models
 
             //desiredParameters = parameters.Where(p => p.desired).ToArray();
             funcExpression = new Expression(json.GetProperty("function").GetString());
+            desiredParameterName = json.GetProperty("desiredParameterName").GetString();
+            Latex = json.GetProperty("functionLatex").GetString();
+            var mm = json.GetProperty("minmax").GetString();
+
+            if (mm=="min")
+            {
+                minMax = MinMax.Min;
+            }
+            if (mm == "max")
+            {
+                minMax = MinMax.Max;
+            }
             buildParametersWithBound();
         }
 
@@ -291,17 +313,61 @@ namespace OptimizatonMethods.Models
 
         public void Calculate(out List<Point3D> points3D)
         {
+            if (minMax == MinMax.Min)
+            {
+                calcMin(out points3D);
+            }
+            else
+            {
+                calcMax(out points3D);
+            }
+        }
+        private Point SearchMinOnGrid(out List<Point3D> points3D, out List<double> values)
+        {
+            points3D = new List<Point3D>();
+
+            for ( p1.parameter.Value = p1.min; p1.parameter.Value <= p1.max; p1.parameter.Value += _step)
+            {
+                for ( p2.parameter.Value = p2.min; p2.parameter.Value <= p2.max; p2.parameter.Value += _step)
+                {
+                    if (!restrictions.GetValue())
+                    {
+                        continue;
+                    }
+
+                    //CalculationCount++;
+                    var value = Function();
+
+                    if (value < 0)
+                    {
+                        //MessageBox.Show($"{p1.parameter.symbol} {p1.parameter.Value} {p2.parameter.symbol} {p2.parameter.Value} Z {value}");
+                    }
+
+                    points3D.Add(new Point3D(Math.Round(p1.parameter.Value, 2), Math.Round(p2.parameter.Value, 2), Math.Round(value, 2)));
+                }
+            }
+
+            var valuesListTemp = points3D.Select(item => item.Z).ToList();
+            values = valuesListTemp;
+
+            return new Point(points3D.Find(x => x.Z == valuesListTemp.Min()).X, points3D.Find(x => x.Z == valuesListTemp.Min()).Y);
+        }
+
+
+
+        private void calcMin(out List<Point3D> points3D)
+        {
             var funcMin = double.PositiveInfinity;
             var _k = 10;
             var _r = 2;
-            var _epsilon = 0.01; 
-            _step = Math.Pow(_k, _r) * _epsilon; 
+            var _epsilon = 0.01;
+            _step = Math.Pow(_k, _r) * _epsilon;
             points3D = new List<Point3D>();
             var p3D = new List<Point3D>();
             List<double> values;
             Point newMin;
 
-            newMin = SearchMinOnGrid(out p3D, out values); 
+            newMin = SearchMinOnGrid(out p3D, out values);
             //p1.min = newMin.X - _step;
             //p2.min = newMin.Y - _step;
 
@@ -326,13 +392,51 @@ namespace OptimizatonMethods.Models
                 points3D.AddRange(p3D);
             }
         }
-        private Point SearchMinOnGrid(out List<Point3D> points3D, out List<double> values)
+
+        private void calcMax(out List<Point3D> points3D)
+        {
+            var funcMax = double.NegativeInfinity;
+            var _k = 10;
+            var _r = 2;
+            var _epsilon = 0.01;
+            _step = Math.Pow(_k, _r) * _epsilon;
+            points3D = new List<Point3D>();
+            var p3D = new List<Point3D>();
+            List<double> values;
+            Point newMin;
+
+            newMin = SearchMinOnGrid(out p3D, out values);
+            //p1.min = newMin.X - _step;
+            //p2.min = newMin.Y - _step;
+
+            //p1.max = newMin.X + _step;
+            //p2.max = newMin.Y + _step;
+
+            _step /= _k;
+            points3D.AddRange(p3D);
+
+            while (funcMax > values.Max())
+            {
+                newMin = SearchMaxOnGrid(out p3D, out values);
+
+                //p1.min = newMin.X - _step;
+                //p2.min = newMin.Y - _step;
+
+                //p1.max = newMin.X + _step;
+                //p2.max = newMin.Y + _step;
+
+                _step /= _k;
+                funcMax = values.Max();
+                points3D.AddRange(p3D);
+            }
+        }
+        private Point SearchMaxOnGrid(out List<Point3D> points3D, out List<double> values)
         {
             points3D = new List<Point3D>();
 
-            for ( p1.parameter.Value = p1.min; p1.parameter.Value <= p1.max; p1.parameter.Value += _step)
+            for (p1.parameter.Value = p1.min; p1.parameter.Value <= p1.max; p1.parameter.Value += _step)
             {
-                for ( p2.parameter.Value = p2.min; p2.parameter.Value <= p2.max; p2.parameter.Value += _step)
+                for (p2.parameter.Value = p2.min; p2.parameter.Value <= p2.max; p2.parameter.Value += _step)
                 {
                     if (!restrictions.GetValue())
                     {
@@ -344,7 +448,7 @@ namespace OptimizatonMethods.Models
 
                     if (value < 0)
                     {
-                        MessageBox.Show($"{p1.parameter.symbol} {p1.parameter.Value} {p2.parameter.symbol} {p2.parameter.Value} Z {value}");
+                        //MessageBox.Show($"{p1.parameter.symbol} {p1.parameter.Value} {p2.parameter.symbol} {p2.parameter.Value} Z {value}");
                     }
 
                     points3D.Add(new Point3D(Math.Round(p1.parameter.Value, 2), Math.Round(p2.parameter.Value, 2), Math.Round(value, 2)));
@@ -354,7 +458,7 @@ namespace OptimizatonMethods.Models
             var valuesListTemp = points3D.Select(item => item.Z).ToList();
             values = valuesListTemp;
 
-            return new Point(points3D.Find(x => x.Z == valuesListTemp.Min()).X, points3D.Find(x => x.Z == valuesListTemp.Min()).Y);
+            return new Point(points3D.Find(x => x.Z == valuesListTemp.Max()).X, points3D.Find(x => x.Z == valuesListTemp.Max()).Y);
         }
     }
 }
