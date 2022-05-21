@@ -12,7 +12,7 @@ namespace OptimizatonMethods
     {
         protected override void OnStartup(StartupEventArgs e)
         {
-            var mainWindow = new MainWindow {DataContext = new MainWindowViewModel(),};
+            var mainWindow = new MainWindowTest();
             mainWindow.Show();
         }
     }

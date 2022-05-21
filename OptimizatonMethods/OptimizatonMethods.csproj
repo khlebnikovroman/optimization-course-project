@@ -10,6 +10,7 @@
   <ItemGroup>
     <PackageReference Include="ChartDirector.Net.Desktop.Controls" Version="7.0.0" />
     <PackageReference Include="HandyControl" Version="3.3.0" />
+    <PackageReference Include="org.matheval" Version="1.0.0.2" />
     <PackageReference Include="PropertyChanged.Fody" Version="3.4.0" />
     <PackageReference Include="WpfMath" Version="0.11.0" />
   </ItemGroup>
@@ -18,6 +19,12 @@
     <Reference Include="WPF_MVVM_Classes">
       <HintPath>Services\WPF_MVVM_Classes.dll</HintPath>
     </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="variants.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

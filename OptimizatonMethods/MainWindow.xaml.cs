@@ -2,6 +2,8 @@
 using System.Windows;
 using System.Windows.Controls;
 
+using OptimizatonMethods.ViewModels;
+
 
 namespace OptimizatonMethods
 {
@@ -13,6 +15,7 @@ namespace OptimizatonMethods
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = new MainWindowViewModel();
         }
 
         private void OnAutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)

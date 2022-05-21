@@ -1,0 +1,190 @@
+[
+  {
+    "displayName": "1 Вариант",
+    "functionLatex": "",
+    "function": "a*( A1^2 +b* A2 - u*V1)^ N + a1*(b1*A1 + A2^2 - u1*V2)^N",
+    "parameters": [
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "a",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "a1",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "b",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "b1",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "u",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "u1",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Количество  реакторов",
+        "symbol": "N",
+        "unit": "",
+        "defaultValue": 2
+      },
+      {
+        "displayName": "Рабочий объем реактора",
+        "symbol": "V1",
+        "unit": "м^3",
+        "defaultValue": 11
+      },
+      {
+        "displayName": "Рабочий объем реактора",
+        "symbol": "V2",
+        "unit": "м^3",
+        "defaultValue": 7
+      },
+      {
+        "displayName": "Объемный расход",
+        "symbol": "A1",
+        "unit": "м^3",
+        "desired": true,
+        "defaultValue": 7
+      },
+      {
+        "displayName": "Объемный расход",
+        "symbol": "A2",
+        "unit": "м^3",
+        "desired": true,
+        "defaultValue": 7
+      }
+    ],
+    "restrictions": [
+      {
+        "displayName": "Суммарная производительность, м^3 /час  <=",
+        "func": "A1+A2 <= value",
+        "value": 8
+      },
+      {
+        "displayName": "Объемный расход сырьевого компонента A1, м^3 /час >=",
+        "func": "A1 >= value",
+        "value": 1
+      },
+      {
+        "displayName": "Объемный расход сырьевого компонента A1, м^3 /час <=",
+        "func": "A1 <= value",
+        "value": 10
+      },
+      {
+        "displayName": "Объемный расход сырьевого компонента A2, м^3 /час >=",
+        "func": "A2 >= value",
+        "value": 1
+      },
+      {
+        "displayName": "Объемный расход сырьевого компонента A2, м^3 /час <=",
+        "func": "A2 <= value",
+        "value": 10
+      }
+    ]
+  },
+  {
+    "displayName": "16 Вариант",
+    "functionLatex": "",
+    "function": "a*(L-S)^2 + b*1/H*(S+L-u*N)^2",
+    "parameters": [
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "a",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "b",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Нормирующий множитель",
+        "symbol": "u",
+        "unit": "",
+        "defaultValue": 1
+      },
+      {
+        "displayName": "Высота теплообменника",
+        "symbol": "H",
+        "unit": "м",
+        "defaultValue": 9
+      },
+      {
+        "displayName": "Число витков змеевика",
+        "symbol": "N",
+        "unit": "",
+        "defaultValue": 10
+      },
+      {
+        "displayName": "Стоимость производства 1 кг",
+        "symbol": "a",
+        "displaySymbol": false,
+        "unit": "у.е.",
+        "defaultValue": 100
+      },
+      {
+        "displayName": "Длина теплообменного устройства",
+        "symbol": "L",
+        "unit": "м",
+        "desired": true,
+        "defaultValue": 0
+      },
+      {
+        "displayName": "Ширина теплообменного устройства",
+        "symbol": "S",
+        "unit": "м",
+        "desired": true,
+        "defaultValue": 0
+      }
+    ],
+    "restrictions": [
+      {
+        "displayName": "Сумма длины и ширины (L+S), м >=",
+        "func": "L+S >= value",
+        "value": 11
+      },
+      {
+        "displayName": "Длина теплообменного устройства, м >=",
+        "func": "L >= value",
+        "value": 1
+      },
+      {
+        "displayName": "Длина теплообменного устройства, м <=",
+        "func": "L <= value",
+        "value": 15
+      },
+      {
+        "displayName": "Ширина теплообменного устройства, м >=",
+        "func": "S >= value",
+        "value": 1
+      },
+      {
+        "displayName": "Ширина теплообменного устройства, м<=",
+        "func": "S <= value",
+        "value": 12
+      }
+    ]
+  }
+
+]
