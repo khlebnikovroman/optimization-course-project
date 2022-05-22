@@ -46,9 +46,6 @@ namespace OptimizatonMethods.ViewModels
         #region Variables
 
         public Dictionary<string, JsonElement> variants { get; set; }
-        private IEnumerable<Method> _allMethods;
-        private IEnumerable<Task> _allTasks;
-        private Task _selectedTask;
         private RelayCommand? _calculateCommand;
         private IEnumerable _dataList;
         private List<Point3D> _point3D = new();
@@ -58,23 +55,26 @@ namespace OptimizatonMethods.ViewModels
 
         #region Properties
 
-            private KeyValuePair<string, JsonElement> _selectedVariant;
-            public KeyValuePair<string, JsonElement> SelectedVariant
+        public List<Method> Methods { get; set; } = new List<Method>() {
+            new Method() {Id=1, Name="Метод сканирования", Activated = true },
+            new Method() {Id=2, Name="Метод xxxxx", Activated = false} };
+
+        private KeyValuePair<string, JsonElement> _selectedVariant;
+        public KeyValuePair<string, JsonElement> SelectedVariant
+        {
+            get
             {
-                get
-                {
-                    return _selectedVariant;
-                }
-                set
-                {
-                    _selectedVariant=value;
-                    mathModel=new MathModelTest(value.Value);
-                    OnPropertyChanged();
-                }
+                return _selectedVariant;
             }
+            set
+            {
+                DataList = new List<Point3D>();
+                _selectedVariant=value;
+                mathModel=new MathModelTest(value.Value);
+                OnPropertyChanged();
+            }
+        }
         public MathModelTest mathModel { get; set; }
-
-
         public IEnumerable DataList
         {
             get

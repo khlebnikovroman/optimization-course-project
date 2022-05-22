@@ -16,7 +16,6 @@ namespace OptimizatonMethods
     public partial class Chart3DWindow : Window
     {
         private readonly List<Point3D> _dataList;
-        private readonly Task _task;
 
         private MathModelTest mathModel;
         // 3D view angles

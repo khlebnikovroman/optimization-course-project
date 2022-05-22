@@ -12,13 +12,10 @@ namespace OptimizatonMethods.Models
             Z = z;
         }
 
-        [DisplayName("Длина")]
         public double X { get; set; }
 
-        [DisplayName("Ширина")]
         public double Y { get; set; }
 
-        [DisplayName("Себестоимость продукта")]
         public double Z { get; set; }
     }
 }

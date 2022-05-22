@@ -16,7 +16,6 @@ namespace OptimizatonMethods
     public partial class Chart2DWindow : Window
     {
         private readonly List<Point3D> _dataList = new();
-        private readonly Task _task;
         private readonly MathModelTest mathModel;
         private ContourLayer contourLayer;
 

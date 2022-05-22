@@ -2506,6 +2506,12 @@
         "defaultValue": 10
       },
       {
+        "displayName": "Рабочая неделя",
+        "symbol": "shift",
+        "unit": "час",
+        "defaultValue": 40
+      },
+      {
         "displayName": "Температура во первом реакторе",
         "symbol": "T1",
         "unit": "°C",
