@@ -204,6 +204,8 @@ namespace OptimizatonMethods.Models
         }
         public string desiredParameterName { get; set; }
         public string Latex { get; set; }
+
+        public string Task { get; set; }
         public MinMax minMax;
         public ParameterWithBounds p1
         {
@@ -255,6 +257,8 @@ namespace OptimizatonMethods.Models
             funcExpression = new Expression(json.GetProperty("function").GetString());
             desiredParameterName = json.GetProperty("desiredParameterName").GetString();
             Latex = json.GetProperty("functionLatex").GetString();
+            Task = json.GetProperty("task").GetString();
+
             var mm = json.GetProperty("minmax").GetString();
 
             if (mm=="min")

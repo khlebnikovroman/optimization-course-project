@@ -44,7 +44,15 @@
                     <StackPanel>
                     <controls:FormulaControl Scale="25" Margin="10"
                                              Formula="{Binding mathModel.Latex}" />
-                    <ComboBox ItemsSource="{Binding variants}" DisplayMemberPath="Key" SelectedItem="{Binding SelectedVariant}"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <ComboBox ItemsSource="{Binding variants}" DisplayMemberPath="Key" SelectedItem="{Binding SelectedVariant}"/>
+                        <Button Grid.Column="1" Content="Показать условие задачи" Command="{Binding ShowTask}"></Button>
+                    </Grid>
+                    
                     <ListBox ItemsSource="{Binding mathModel.parameters}">
                     <ListBox.ItemContainerStyle>
                         <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource ListBoxItemBaseStyle}">

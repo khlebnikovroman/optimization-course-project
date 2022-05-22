@@ -135,6 +135,18 @@ namespace OptimizatonMethods.ViewModels
             }
         }
 
+
+        public RelayCommand ShowTask
+        {
+            get
+            {
+                return new RelayCommand(r =>
+                {
+                    HandyControl.Controls.MessageBox.Show(mathModel.Task);
+                });
+            }
+        }
+
         public RelayCommand TwoDChartCommand
         {
             get
