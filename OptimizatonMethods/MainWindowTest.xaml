@@ -8,14 +8,14 @@
            xmlns:viewModels="clr-namespace:OptimizatonMethods.ViewModels"
            mc:Ignorable="d"
            ShowTitle="False"
-           Title="MainWindow" Height="600" Width="1400" MinHeight="600" MinWidth="1400" FontSize="16"
+           WindowState="Maximized"
+           Title="" Height="600" Width="1400" MinHeight="600" MinWidth="1400" FontSize="16"
            d:DataContext="{d:DesignInstance viewModels:MainWindowViewModelTest}"
           >
     <hc:Window.NonClientAreaContent>
         <StackPanel Orientation="Horizontal">
             <Menu>
                 <MenuItem Header="Файл">
-                    <MenuItem Header="Сменить пользователя" Command="{Binding AutorizationCommand}" />
                     <MenuItem Header="2D график" Command="{Binding TwoDChartCommand}" />
                     <MenuItem Header="3D график" Command="{Binding ThreeDChartCommand}" />
                 </MenuItem>
@@ -125,13 +125,16 @@
 
                 </GroupBox>
                     <GroupBox Header="Выбор метода">
-                        <ComboBox ItemsSource="{Binding Methods}" SelectedIndex="0" DisplayMemberPath="Name">
+                        <ComboBox ItemsSource="{Binding Methods}" SelectedItem="{Binding SelectedMethod}" DisplayMemberPath="Name">
                             <ComboBox.ItemContainerStyle>
                                 <Style TargetType="ComboBoxItem">
                                     <Setter Property="IsEnabled" Value="{Binding Activated}" />
                                 </Style>
                             </ComboBox.ItemContainerStyle>
                         </ComboBox>
+                    </GroupBox>
+                    <GroupBox Header="Параметры метода">
+                        <ContentControl Content="{Binding MethodControl}"/>
                     </GroupBox>
                 </StackPanel>
             </hc:ScrollViewer>
@@ -140,24 +143,23 @@
         </Grid>
 
 
-        <DataGrid Grid.Row="1" Grid.Column="1" ItemsSource="{Binding DataList}" AutoGenerateColumns="False"
-                   ColumnWidth="*">
+        <DataGrid Grid.Row="1" Grid.Column="1" ItemsSource="{Binding mathModel.Method.Point3Ds, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False">
             <DataGrid.Columns>
-                <DataGridTextColumn  Binding="{Binding Path=X}">
+                <DataGridTextColumn  Binding="{Binding Path=X, StringFormat=N3}">
                     <DataGridTextColumn.HeaderTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding DataContext.mathModel.p1.parameter.displayName, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
                         </DataTemplate>
                     </DataGridTextColumn.HeaderTemplate>
                 </DataGridTextColumn>
-                <DataGridTextColumn  Binding="{Binding Path=Y}">
+                <DataGridTextColumn  Binding="{Binding Path=Y, StringFormat=N3}">
                     <DataGridTextColumn.HeaderTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding DataContext.mathModel.p2.parameter, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
                         </DataTemplate>
                     </DataGridTextColumn.HeaderTemplate>
                 </DataGridTextColumn>
-                <DataGridTextColumn  Binding="{Binding Path=Z}">
+                <DataGridTextColumn  Binding="{Binding Path=Z, StringFormat=N3}">
                     <DataGridTextColumn.HeaderTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding DataContext.mathModel.desiredParameterName, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>

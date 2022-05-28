@@ -1,0 +1,19 @@
+﻿<UserControl x:Class="OptimizatonMethods.MethodControls.ScanMethodControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:hc="https://handyorg.github.io/handycontrol"
+             xmlns:local="clr-namespace:OptimizatonMethods.MethodControls"
+             mc:Ignorable="d" 
+             DataContext="{Binding RelativeSource={RelativeSource Self}}"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <StackPanel>
+            <hc:NumericUpDown Style="{StaticResource NumericUpDownExtend}"
+                              Grid.Column="1" hc:InfoElement.Title="Точность" hc:InfoElement.TitlePlacement="Left"
+                              Value="{Binding Path=Method.Epsilon, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                              Height="40"   />
+        </StackPanel>
+    </Grid>
+</UserControl>

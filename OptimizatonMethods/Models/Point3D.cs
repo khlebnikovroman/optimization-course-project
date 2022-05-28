@@ -12,6 +12,10 @@ namespace OptimizatonMethods.Models
             Z = z;
         }
 
+        public Point3D(Point point, double z):this(point.X,point.Y,z)
+        {
+            
+        }
         public double X { get; set; }
 
         public double Y { get; set; }

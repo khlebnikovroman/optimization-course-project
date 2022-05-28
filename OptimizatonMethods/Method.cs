@@ -1,11 +1,14 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
+
+using OptimizatonMethods.Models;
 
 
 namespace OptimizatonMethods
 {
-    public class Method
+    public class MethodExtended
     {
-        public long Id { get; set; }
+        public Type MethodType { get; set; }
 
         public string Name { get; set; }
 

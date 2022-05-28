@@ -5,16 +5,60 @@ using System.IO;
 using System.Linq;
 using System.Text.Json;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Documents;
+
+using OptimizatonMethods.MethodControls;
+
 using PropertyChanged;
 using OptimizatonMethods.Models;
 
 using WPF_MVVM_Classes;
 
+using Point = OptimizatonMethods.Models.Point;
 using ViewModelBase = OptimizatonMethods.Services.ViewModelBase;
 
 
 namespace OptimizatonMethods.ViewModels
 {
+    public static class MethodBuilder
+    {
+        public static IOptimMethod BuildOptimMethod(MethodExtended me,MathModelTest mm)
+        {
+            mm.buildParametersWithBound();
+            if (me.MethodType == typeof(ScanMethod))
+            {
+                return new ScanMethod(mm.Function,mm.Conditions, mm.p1, mm.p2);
+            }
+            else if (me.MethodType == typeof(VariationMethod))
+            {
+                return new VariationMethod(mm.Function,mm.Conditions, mm.p1, mm.p2);
+            }
+            else
+            {
+                throw new ArgumentException("Указанный метод не найден", nameof(me.MethodType));
+            }
+        }
+    }
+    public static class MethodControlBuilder
+    {
+        public static UserControl BuildMethodControl(IOptimMethod me)
+        {
+            if (me.GetType() == typeof(ScanMethod))
+            {
+                return new ScanMethodControl(me as ScanMethod);
+            }
+            else if (me.GetType() == typeof(VariationMethod))
+            {
+                return new VariationMethodControl(me as VariationMethod);
+            }
+            else
+            {
+                throw new ArgumentException("Указанный метод не найден", nameof(me));
+            }
+        }
+    }
+
     [AddINotifyPropertyChangedInterface]
     public class MainWindowViewModelTest : ViewModelBase
     {
@@ -35,29 +79,20 @@ namespace OptimizatonMethods.ViewModels
                 variants[variant.GetProperty("displayName").GetString()]=variant;
             }
 
-            SelectedVariant = variants.ElementAt(0);
-            //mathModel = new MathModelTest(variants.ElementAt(0).Value);
+            SelectedVariant = variants.ElementAt(15);
+            SelectedMethod = Methods.First();
             OnPropertyChanged(nameof(mathModel));
         }
 
         #endregion
-
-
-        #region Variables
-
-        public Dictionary<string, JsonElement> variants { get; set; }
-        private RelayCommand? _calculateCommand;
-        private IEnumerable _dataList;
-        private List<Point3D> _point3D = new();
-
-        #endregion
-
+            
 
         #region Properties
-
-        public List<Method> Methods { get; set; } = new List<Method>() {
-            new Method() {Id=1, Name="Метод сканирования", Activated = true },
-            new Method() {Id=2, Name="Метод xxxxx", Activated = false} };
+        public Dictionary<string, JsonElement> variants { get; set; }
+        public List<MethodExtended> Methods { get; set; } = new List<MethodExtended>() {
+            new() {Name="Метод сканирования", Activated = true, MethodType = typeof(ScanMethod)},
+            new() {Name="Метод поочередного варьирования", Activated = true,MethodType = typeof(VariationMethod)},
+        };
 
         private KeyValuePair<string, JsonElement> _selectedVariant;
         public KeyValuePair<string, JsonElement> SelectedVariant
@@ -68,31 +103,40 @@ namespace OptimizatonMethods.ViewModels
             }
             set
             {
-                DataList = new List<Point3D>();
                 _selectedVariant=value;
                 mathModel=new MathModelTest(value.Value);
+                mathModel.restrictions.Bind();
+                SelectedMethod = Methods.First();
                 OnPropertyChanged();
             }
         }
-        public MathModelTest mathModel { get; set; }
-        public IEnumerable DataList
+
+        private MethodExtended _selectedMethod;
+        public UserControl MethodControl { get; set; }
+        public MethodExtended SelectedMethod
         {
             get
             {
-                return _dataList;
+                return _selectedMethod;
             }
             set
             {
-                _dataList = value;
+                _selectedMethod = value;
+                mathModel.Method = MethodBuilder.BuildOptimMethod(_selectedMethod, mathModel);
+                MethodControl = MethodControlBuilder.BuildMethodControl(mathModel.Method);
                 OnPropertyChanged();
             }
         }
+
+        public MathModelTest mathModel { get; set; }
+
 
         #endregion
 
 
         #region Command
 
+        private RelayCommand? _calculateCommand;
         public RelayCommand CalculateCommand
         {
             get
@@ -100,37 +144,11 @@ namespace OptimizatonMethods.ViewModels
                 return _calculateCommand ??= new RelayCommand(c =>
                 {
                     
-                    mathModel.Calculate(out var points3D);
-                    DataList = points3D;
+                    var p = mathModel.Calculate();
 
-                    var temp = new List<double>();
-
-                    foreach (var item in points3D)
-                    {
-                        temp.Add(item.Z);
-                    }
-
-                    double x = 0;
-                    double y = 0;
-                    double z = 0;
-
-                    if (mathModel.minMax == MathModelTest.MinMax.Max)
-                    {
-                        z = temp.Max();
-                        x = points3D.Find(x => x.Z == z).X;
-                        y = points3D.Find(x => x.Z == z).Y;
-                    }
-                    else if (mathModel.minMax == MathModelTest.MinMax.Min)
-                    {
-                        z = temp.Min();
-                        x = points3D.Find(x => x.Z == z).X;
-                        y = points3D.Find(x => x.Z == z).Y;
-                    }
-
-                    
-                    HandyControl.Controls.MessageBox.Show($"{mathModel.desiredParameterName}: {z}\n " +
-                                    $"{mathModel.p1.parameter.ToString()}: {x}\n " +
-                                    $"{mathModel.p2.parameter.ToString()}: {y}", "Ответ", MessageBoxButton.OK, MessageBoxImage.Information);
+                    HandyControl.Controls.MessageBox.Show($"{mathModel.desiredParameterName}: {p.Z}\n " +
+                                    $"{mathModel.p1.parameter.ToString()}: {p.X}\n " +
+                                    $"{mathModel.p2.parameter.ToString()}: {p.Y}", "Ответ", MessageBoxButton.OK, MessageBoxImage.Information);
                 });
             }
         }

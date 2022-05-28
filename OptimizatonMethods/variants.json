@@ -1534,7 +1534,7 @@
     "functionLatex": "P = \\alpha  * (L - S)^2 + \\beta  * 1 / H * (S+ L -  \\gamma  *N)^2",
     "desiredParameterName": "Затраты на изготовление изделия",
     "minmax": "min",
-    "function": "price*a*(L-S)^2 + b*1/H*(S+L-u*N)^2",
+    "function": "price*a*((L-S)^2) + b*1/H*((S+L-u*N)^2)",
     "parameters": [
       {
         "displayName": "Нормирующий множитель",
